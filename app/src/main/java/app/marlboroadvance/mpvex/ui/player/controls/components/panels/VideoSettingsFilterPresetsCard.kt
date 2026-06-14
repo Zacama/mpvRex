@@ -20,7 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.DecoderPreferences
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.presentation.components.ExpandableCard
@@ -65,7 +67,7 @@ fun VideoSettingsFilterPresetsCard(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
       ) {
         Icon(Icons.Default.AutoAwesome, null)
-        Text("Filter Presets")
+        Text(stringResource(R.string.filter_presets))
       }
     },
     colors = panelCardsColors(),
@@ -100,7 +102,7 @@ fun VideoSettingsFilterPresetsCard(modifier: Modifier = Modifier) {
               MPVLib.setPropertyInt("hue", preset.hue)
               MPVLib.setPropertyInt("sharpen", preset.sharpness)
             },
-            label = { Text(preset.displayName) },
+            label = { Text(stringResource(preset.displayNameRes)) },
             leadingIcon = null,
           )
         }
@@ -108,9 +110,10 @@ fun VideoSettingsFilterPresetsCard(modifier: Modifier = Modifier) {
 
       // Show description for selected preset
       currentPreset?.let { preset ->
-        if (preset.description.isNotEmpty()) {
+        val presetDescription = stringResource(preset.descriptionRes)
+        if (presetDescription.isNotEmpty()) {
           Text(
-            text = preset.description,
+            text = presetDescription,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(top = 4.dp),

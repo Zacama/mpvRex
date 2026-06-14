@@ -474,11 +474,11 @@ object FolderListScreen : Screen {
                 onSearch = { },
                 expanded = false,
                 onExpandedChange = { },
-                placeholder = { Text("Search folders and videos...", maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                placeholder = { Text(stringResource(R.string.search_folders_and_videos), maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 leadingIcon = {
                   Icon(
                     imageVector = Icons.Filled.Search,
-                    contentDescription = "Search",
+                    contentDescription = stringResource(R.string.generic_search),
                   )
                 },
                 trailingIcon = {
@@ -490,7 +490,7 @@ object FolderListScreen : Screen {
                   ) {
                     Icon(
                       imageVector = Icons.Filled.Close,
-                      contentDescription = "Cancel",
+                      contentDescription = stringResource(R.string.generic_cancel),
                     )
                   }
                 },
@@ -552,7 +552,7 @@ object FolderListScreen : Screen {
             selectionOverflowActions = listOf(
               SelectionOverflowAction(
                 icon = Icons.Filled.Share,
-                label = "Share",
+                label = stringResource(R.string.generic_share),
                 onClick = {
                   coroutineScope.launch {
                     val selectedIds = selectionManager.getSelectedItems().map { it.bucketId }.toSet()
@@ -566,7 +566,7 @@ object FolderListScreen : Screen {
               ),
               SelectionOverflowAction(
                 icon = Icons.Filled.Block,
-                label = "Blacklist",
+                label = stringResource(R.string.blacklist),
                 onClick = {
                   coroutineScope.launch {
                     val selectedFolders = selectionManager.getSelectedItems()
@@ -612,7 +612,7 @@ object FolderListScreen : Screen {
                   TooltipAnchorPosition.Above
                 }
               ),
-              tooltip = { PlainTooltip { Text("Toggle menu") } },
+              tooltip = { PlainTooltip { Text(stringResource(R.string.toggle_menu)) } },
               state = rememberTooltipState(),
             ) {
               ToggleFloatingActionButton(
@@ -643,7 +643,7 @@ object FolderListScreen : Screen {
               filePicker.launch(arrayOf("video/*"))
             },
             icon = { Icon(Icons.Filled.FileOpen, contentDescription = null) },
-            text = { Text(text = "Open File") },
+            text = { Text(text = stringResource(R.string.open_file)) },
           )
 
           FloatingActionButtonMenuItem(
@@ -658,7 +658,7 @@ object FolderListScreen : Screen {
               }
             },
             icon = { Icon(Icons.Filled.History, contentDescription = null) },
-            text = { Text(text = "Recently Played") },
+            text = { Text(text = stringResource(R.string.recently_played)) },
           )
 
           FloatingActionButtonMenuItem(
@@ -667,7 +667,7 @@ object FolderListScreen : Screen {
               showLinkDialog.value = true
             },
             icon = { Icon(Icons.Filled.Link, contentDescription = null) },
-            text = { Text(text = "Open Link") },
+            text = { Text(text = stringResource(R.string.open_link)) },
           )
         }
       },
@@ -903,14 +903,14 @@ object FolderListScreen : Screen {
               coroutineScope.launch {
                 val ok = viewModel.renameFolder(folder, newName)
                 if (!ok) {
-                  android.widget.Toast.makeText(context, "Rename failed", android.widget.Toast.LENGTH_SHORT).show()
+                  android.widget.Toast.makeText(context, context.getString(R.string.rename_failed), android.widget.Toast.LENGTH_SHORT).show()
                 }
                 selectionManager.clear()
                 viewModel.refresh()
               }
             },
             currentName = folder.name,
-            itemType = "folder",
+            itemType = stringResource(R.string.item_type_folder),
           )
         }
       }
@@ -919,7 +919,7 @@ object FolderListScreen : Screen {
         isOpen = deleteDialogOpen.value,
         onDismiss = { deleteDialogOpen.value = false },
         onConfirm = { selectionManager.deleteSelected() },
-        itemType = "folder",
+        titlePluralRes = R.plurals.delete_title_folder,
         itemCount = selectionManager.selectedCount,
         itemNames = selectionManager.getSelectedItems().map { it.name },
       )
@@ -972,8 +972,8 @@ private fun FolderListContent(
     onClick = { onFolderClick(it) },
     onLongClick = { onFolderLongClick(it) },
     onToggleSelection = { selectionManager.toggle(it) },
-    emptyTitle = "No video folders found",
-    emptyMessage = "Add videos to your device to see folders here",
+    emptyTitle = stringResource(R.string.folders_empty_state_title),
+    emptyMessage = stringResource(R.string.folders_empty_state_message),
     isRefreshing = isRefreshing,
     onRefresh = onRefresh,
     isInSelectionMode = selectionManager.isInSelectionMode,

@@ -1,6 +1,9 @@
 package app.marlboroadvance.mpvex.ui.player
 
+import android.content.Context
 import android.util.Log
+import app.marlboroadvance.mpvex.R
+import app.marlboroadvance.mpvex.utils.withAppLocale
 import app.marlboroadvance.mpvex.preferences.PlayerPreferences
 import `is`.xyz.mpv.MPVLib
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +20,7 @@ import java.io.File
  * Handles shader generation, video scaling, and parameter management.
  */
 class AmbientModeManager(
+  private val context: Context,
   private val playerPreferences: PlayerPreferences,
   private val cacheDir: File,
   private val scope: CoroutineScope,
@@ -50,10 +54,10 @@ class AmbientModeManager(
     if (_isAmbientEnabled.value) {
       lastAmbientScaleX = -1.0 // Force rewrite
       updateAmbientStretch()
-      onShowText("Ambience Mode: ON")
+      onShowText(context.withAppLocale().getString(R.string.ambient_mode_on))
     } else {
       disableAmbientShader()
-      onShowText("Ambience Mode: OFF")
+      onShowText(context.withAppLocale().getString(R.string.ambient_mode_off))
     }
   }
 

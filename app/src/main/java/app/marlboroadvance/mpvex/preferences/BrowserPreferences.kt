@@ -1,5 +1,7 @@
 package app.marlboroadvance.mpvex.preferences
 
+import androidx.annotation.StringRes
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.preference.PreferenceStore
 import app.marlboroadvance.mpvex.preferences.preference.getEnum
 
@@ -82,43 +84,26 @@ enum class SortOrder {
 /**
  * Folder sorting options
  */
-enum class FolderSortType {
-  Title,
-  Duration,
-  Date,
-  Size,
-  VideoCount,
-  ;
-
-  val displayName: String
-    get() =
-      when (this) {
-        Title -> "Title"
-        Duration -> "Duration"
-        Date -> "Date"
-        Size -> "Size"
-        VideoCount -> "Count"
-      }
+enum class FolderSortType(
+  @StringRes val titleRes: Int,
+) {
+  Title(R.string.sort_type_title),
+  Duration(R.string.sort_type_duration),
+  Date(R.string.sort_type_date),
+  Size(R.string.sort_type_size),
+  VideoCount(R.string.sort_type_count),
 }
 
 /**
  * Video sorting options
  */
-enum class VideoSortType {
-  Title,
-  Duration,
-  Date,
-  Size,
-  ;
-
-  val displayName: String
-    get() =
-      when (this) {
-        Title -> "Title"
-        Duration -> "Duration"
-        Date -> "Date"
-        Size -> "Size"
-      }
+enum class VideoSortType(
+  @StringRes val titleRes: Int,
+) {
+  Title(R.string.sort_type_title),
+  Duration(R.string.sort_type_duration),
+  Date(R.string.sort_type_date),
+  Size(R.string.sort_type_size),
 }
 
 /**
@@ -128,25 +113,9 @@ enum class FolderViewMode {
   AlbumView,
   FileManager,
   MediaLibrary,
-  ;
-
-  val displayName: String
-    get() =
-      when (this) {
-        AlbumView -> "Folder View"
-        FileManager -> "Tree View"
-        MediaLibrary -> "Media Library"
-      }
 }
 
 enum class MediaLayoutMode {
   LIST,
   GRID,
-  ;
-
-  val displayName:  String
-    get() = when (this) {
-      LIST -> "List"
-      GRID -> "Grid"
-    }
 }

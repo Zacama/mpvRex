@@ -33,10 +33,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.ui.theme.spacing
 
 /**
@@ -158,7 +160,7 @@ fun CompactSpeedIndicator(
                 Box(contentAlignment = Alignment.Center) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Reset Speed",
+                        contentDescription = stringResource(R.string.speed_reset),
                         modifier = Modifier.size(14.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )

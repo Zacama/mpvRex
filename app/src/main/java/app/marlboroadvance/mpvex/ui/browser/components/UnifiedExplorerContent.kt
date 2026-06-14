@@ -17,8 +17,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.domain.media.model.Video
 import app.marlboroadvance.mpvex.domain.media.model.VideoFolder
 import app.marlboroadvance.mpvex.ui.browser.playlist.PlaylistWithCount
@@ -229,7 +231,7 @@ fun <T> UnifiedExplorerContent(
           // --- FOLDERS SECTION ---
           if (folderItems.isNotEmpty()) {
             item(key = "folders_header") {
-              SectionHeader(title = "Folders (${folderItems.size})")
+              SectionHeader(title = stringResource(R.string.section_folders_count, folderItems.size))
             }
 
             if (mediaLayoutMode == MediaLayoutMode.GRID) {
@@ -334,7 +336,7 @@ fun <T> UnifiedExplorerContent(
           // --- MEDIA SECTION ---
           if (videoItems.isNotEmpty()) {
             item(key = "media_header") {
-              SectionHeader(title = "Media (${videoItems.size})")
+              SectionHeader(title = stringResource(R.string.section_media_count, videoItems.size))
             }
 
             if (mediaLayoutMode == MediaLayoutMode.GRID) {
@@ -549,7 +551,7 @@ fun <T> UnifiedExplorerContent(
                   ) {
                     Icon(
                       imageVector = Icons.Filled.DragHandle,
-                      contentDescription = "Drag to reorder",
+                      contentDescription = stringResource(R.string.custom_button_drag_to_reorder),
                       tint = MaterialTheme.colorScheme.primary,
                     )
                   }

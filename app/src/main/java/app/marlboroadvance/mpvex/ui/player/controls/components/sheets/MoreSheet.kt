@@ -326,7 +326,7 @@ fun SettingsTab(
         
         if (isHighRes) {
             Text(
-                text = "Not available for 4K/8K video",
+                text = stringResource(R.string.not_available_4k8k),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(bottom = 4.dp)
@@ -528,7 +528,7 @@ fun ControlsTab(
           .verticalScroll(rememberScrollState())
   ) {
       Text(
-          text = "Extended Controls",
+          text = stringResource(R.string.extended_controls),
           style = MaterialTheme.typography.titleLarge,
           modifier = Modifier.padding(bottom = MaterialTheme.spacing.medium)
       )

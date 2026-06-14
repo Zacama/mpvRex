@@ -35,6 +35,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.lifecycleScope
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.database.entities.PlaybackStateEntity
 import app.marlboroadvance.mpvex.databinding.PlayerLayoutBinding
 import app.marlboroadvance.mpvex.domain.playbackstate.repository.PlaybackStateRepository
@@ -1236,7 +1237,7 @@ class PlayerActivity :
             
             withContext(Dispatchers.Main) {
               MPVLib.command("load-script", targetFile.absolutePath)
-              viewModel.showToast("Loaded script: $scriptName")
+              viewModel.showToast(getString(R.string.lua_script_loaded, scriptName))
             }
           }
         }

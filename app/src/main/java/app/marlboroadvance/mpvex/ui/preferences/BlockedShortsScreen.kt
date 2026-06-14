@@ -28,10 +28,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.database.dao.ShortsMediaDao
 import app.marlboroadvance.mpvex.presentation.Screen
 import app.marlboroadvance.mpvex.ui.browser.shorts.ShortsScreen
@@ -58,7 +60,7 @@ object BlockedShortsScreen : Screen {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "Blocked Videos",
+                            text = stringResource(R.string.pref_shorts_blocked_title),
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colorScheme.primary,
@@ -82,7 +84,7 @@ object BlockedShortsScreen : Screen {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No blocked videos",
+                        text = stringResource(R.string.shorts_no_blocked),
                         color = MaterialTheme.colorScheme.outline
                     )
                 }
@@ -147,7 +149,7 @@ object BlockedShortsScreen : Screen {
                                         contentDescription = null,
                                         modifier = Modifier.padding(end = 4.dp)
                                     )
-                                    Text("Blocked", fontWeight = FontWeight.Bold)
+                                    Text(stringResource(R.string.shorts_blocked_label), fontWeight = FontWeight.Bold)
                                 }
                             }
                         }

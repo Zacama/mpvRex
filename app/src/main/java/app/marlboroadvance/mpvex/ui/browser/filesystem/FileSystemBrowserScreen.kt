@@ -559,7 +559,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                 leadingIcon = {
                   Icon(
                     imageVector = Icons.Filled.Search,
-                    contentDescription = "Search",
+                    contentDescription = stringResource(R.string.generic_search),
                   )
                 },
                 trailingIcon = {
@@ -571,7 +571,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                   ) {
                     Icon(
                       imageVector = Icons.Filled.Close,
-                      contentDescription = "Cancel",
+                      contentDescription = stringResource(R.string.generic_cancel),
                     )
                   }
                 },
@@ -593,7 +593,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
             title = if (isAtRoot) {
               stringResource(app.marlboroadvance.mpvex.R.string.app_name)
             } else {
-              breadcrumbs.lastOrNull()?.name ?: "Tree View"
+              breadcrumbs.lastOrNull()?.name ?: stringResource(R.string.tree_view_title)
             },
             isInSelectionMode = isInSelectionMode,
             selectedCount = selectedCount,
@@ -722,7 +722,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
             selectionOverflowActions = buildList {
               add(SelectionOverflowAction(
                 icon = Icons.Filled.Share,
-                label = "Share",
+                label = stringResource(R.string.generic_share),
                 onClick = {
                   when {
                     isMixedSelection -> {
@@ -754,7 +754,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
               if (folderSelectionManager.isInSelectionMode && !videoSelectionManager.isInSelectionMode) {
                 add(SelectionOverflowAction(
                   icon = Icons.Filled.Block,
-                  label = "Blacklist",
+                  label = stringResource(R.string.blacklist),
                   onClick = {
                     viewModel.blacklistFolders(folderSelectionManager.getSelectedItems())
                     folderSelectionManager.clear()
@@ -806,7 +806,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                     TooltipAnchorPosition.Above
                   }
                 ),
-                tooltip = { PlainTooltip { Text("Toggle menu") } },
+                tooltip = { PlainTooltip { Text(stringResource(R.string.toggle_menu)) } },
                 state = rememberTooltipState(),
               ) {
                 ToggleFloatingActionButton(
@@ -838,7 +838,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                 filePicker.launch(arrayOf("video/*"))
               },
               icon = { Icon(Icons.Filled.FileOpen, contentDescription = null) },
-              text = { Text(text = "Open File") },
+              text = { Text(text = stringResource(R.string.open_file)) },
             )
 
             FloatingActionButtonMenuItem(
@@ -853,7 +853,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                 }
               },
               icon = { Icon(Icons.Filled.History, contentDescription = null) },
-              text = { Text(text = "Recently Played") },
+              text = { Text(text = stringResource(R.string.recently_played)) },
             )
 
             FloatingActionButtonMenuItem(
@@ -862,7 +862,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
                 showLinkDialog.value = true
               },
               icon = { Icon(Icons.Filled.Link, contentDescription = null) },
-              text = { Text(text = "Open Link") },
+              text = { Text(text = stringResource(R.string.open_link)) },
             )
           }
         }
@@ -1061,10 +1061,10 @@ fun FileSystemBrowserScreen(path: String? = null) {
           videoSelectionManager.deleteSelected()
         }
       },
-      itemType = when {
-        folderSelectionManager.isInSelectionMode && videoSelectionManager.isInSelectionMode -> "item"
-        folderSelectionManager.isInSelectionMode -> "folder"
-        else -> "video"
+      titlePluralRes = when {
+        folderSelectionManager.isInSelectionMode && videoSelectionManager.isInSelectionMode -> R.plurals.delete_title_item
+        folderSelectionManager.isInSelectionMode -> R.plurals.delete_title_folder
+        else -> R.plurals.delete_title_video
       },
       itemCount = selectedCount,
       itemNames = (folderSelectionManager.getSelectedItems().map { it.name } +
@@ -1084,14 +1084,14 @@ fun FileSystemBrowserScreen(path: String? = null) {
               coroutineScope.launch {
                 val ok = viewModel.renameFolder(folder, newName)
                 if (!ok) {
-                  android.widget.Toast.makeText(context, "Rename failed", android.widget.Toast.LENGTH_SHORT).show()
+                  android.widget.Toast.makeText(context, context.getString(R.string.rename_failed), android.widget.Toast.LENGTH_SHORT).show()
                 }
                 folderSelectionManager.clear()
                 viewModel.refresh()
               }
             },
             currentName = folder.name,
-            itemType = "folder",
+            itemType = stringResource(R.string.item_type_folder),
           )
         }
       } else if (videoSelectionManager.isSingleSelection) {
@@ -1104,7 +1104,7 @@ fun FileSystemBrowserScreen(path: String? = null) {
             onDismiss = { renameDialogOpen.value = false },
             onConfirm = { newName -> videoSelectionManager.renameSelected(newName) },
             currentName = baseName,
-            itemType = "file",
+            itemType = stringResource(R.string.item_type_file),
             extension = if (extension != ".") extension else null,
           )
         }
@@ -1434,8 +1434,8 @@ private fun FileSystemBrowserContent(
         }
       },
       modifier = Modifier.weight(1f),
-      emptyTitle = "Empty folder",
-      emptyMessage = "This folder contains no videos or subfolders",
+      emptyTitle = stringResource(R.string.filesystem_empty_title),
+      emptyMessage = stringResource(R.string.filesystem_empty_message),
       isRefreshing = isRefreshing,
       onRefresh = onRefresh,
       isInSelectionMode = isInSelectionMode,
@@ -1518,7 +1518,7 @@ private fun FileSystemSearchContent(
               color = MaterialTheme.colorScheme.primary,
             )
             Text(
-              text = if (isAtRoot) "Searching all storage volumes..." else "Searching...",
+              text = if (isAtRoot) stringResource(R.string.searching_all_volumes) else stringResource(R.string.searching),
               style = MaterialTheme.typography.bodyMedium,
               color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

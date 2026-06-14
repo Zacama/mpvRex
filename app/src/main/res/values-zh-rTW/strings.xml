@@ -538,8 +538,6 @@
     <string name="invalid_subtitle_format">無效的字幕檔案格式</string>
     <string name="subtitle_added">已新增 %s</string>
     <string name="failed_load_subtitle">載入字幕失敗</string>
-    <string name="remove_from_playlist">從播放清單中移除 %1$d %2$s？</string>
-    <string name="remove_playlist_items_confirm">選定的 %2$s 將從此播放清單中移除。原始 %3$s 不會被刪除。</string>
     <string name="search_videos">搜尋影片…</string>
     <string name="search_folders_and_videos">搜尋資料夾和影片…</string>
     <string name="search_playlists">搜尋播放清單…</string>

@@ -5,7 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -50,6 +50,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
@@ -58,6 +59,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.AppearancePreferences
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.ui.theme.DarkMode
@@ -69,7 +71,7 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
 import java.io.File
 
-class MediaInfoActivity : ComponentActivity() {
+class MediaInfoActivity : AppCompatActivity() {
   private val appearancePreferences by inject<AppearancePreferences>()
   private val TAG = "MediaInfoActivity"
 
@@ -181,7 +183,7 @@ class MediaInfoActivity : ComponentActivity() {
 
             isLoading = false
           }.onFailure { e ->
-            error = e.message ?: "Failed to load media information"
+            error = e.message ?: getString(R.string.media_info_load_failed)
             isLoading = false
           }
         } catch (e: Exception) {
@@ -197,7 +199,7 @@ class MediaInfoActivity : ComponentActivity() {
           title = {
             Column {
               Text(
-                text = "Media Info",
+                text = stringResource(R.string.media_info),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
               )
@@ -212,7 +214,7 @@ class MediaInfoActivity : ComponentActivity() {
           },
           navigationIcon = {
             IconButton(onClick = onBack) {
-              Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+              Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
             }
           },
           actions = {
@@ -231,7 +233,7 @@ class MediaInfoActivity : ComponentActivity() {
                 ) {
                   Icon(
                     imageVector = Icons.Filled.ContentCopy,
-                    contentDescription = "Copy",
+                    contentDescription = stringResource(R.string.copy),
                   )
                 }
 
@@ -250,7 +252,7 @@ class MediaInfoActivity : ComponentActivity() {
                 ) {
                   Icon(
                     imageVector = Icons.Filled.Share,
-                    contentDescription = "Share",
+                    contentDescription = stringResource(R.string.generic_share),
                   )
                 }
               }
@@ -293,7 +295,7 @@ class MediaInfoActivity : ComponentActivity() {
           modifier = Modifier.size(48.dp),
         )
         Text(
-          text = "Analyzing media file...",
+          text = stringResource(R.string.media_info_analyzing),
           style = MaterialTheme.typography.bodyLarge,
           fontWeight = FontWeight.Medium,
           color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -317,7 +319,7 @@ class MediaInfoActivity : ComponentActivity() {
         shape = MaterialTheme.shapes.extraLarge,
       ) {
         Text(
-          text = "Error: $errorMessage",
+          text = stringResource(R.string.generic_error_fmt, errorMessage ?: ""),
           style = MaterialTheme.typography.bodyLarge,
           fontWeight = FontWeight.Medium,
           color = MaterialTheme.colorScheme.onErrorContainer,
@@ -334,7 +336,7 @@ class MediaInfoActivity : ComponentActivity() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
       ) {
-        Text("Loading detailed information...")
+        Text(stringResource(R.string.loading_detailed_information))
       }
       return
     }
@@ -478,7 +480,7 @@ class MediaInfoActivity : ComponentActivity() {
       val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
       val clip = android.content.ClipData.newPlainText("Media Info - $fileName", content)
       clipboard.setPrimaryClip(clip)
-      Toast.makeText(this@MediaInfoActivity, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+      Toast.makeText(this@MediaInfoActivity, getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
     }
   }
 
@@ -504,7 +506,7 @@ class MediaInfoActivity : ComponentActivity() {
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
           }
 
-          startActivity(Intent.createChooser(shareIntent, "Share Media Info"))
+          startActivity(Intent.createChooser(shareIntent, getString(R.string.share_media_info)))
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {

@@ -134,13 +134,13 @@ class MPVPipHelper(
     val isPlaying = MPVLib.getPropertyBoolean("pause") == false
 
     return listOf(
-      createRemoteAction("rewind", android.R.drawable.ic_media_rew, PIP_REWIND),
+      createRemoteAction(activity.getString(R.string.pip_rewind), android.R.drawable.ic_media_rew, PIP_REWIND),
       if (isPlaying) {
-        createRemoteAction("pause", R.drawable.baseline_pause_24, PIP_PAUSE)
+        createRemoteAction(activity.getString(R.string.pip_pause), R.drawable.baseline_pause_24, PIP_PAUSE)
       } else {
-        createRemoteAction("play", R.drawable.baseline_play_arrow_24, PIP_PLAY)
+        createRemoteAction(activity.getString(R.string.pip_play), R.drawable.baseline_play_arrow_24, PIP_PLAY)
       },
-      createRemoteAction("forward", android.R.drawable.ic_media_ff, PIP_FORWARD),
+      createRemoteAction(activity.getString(R.string.pip_forward), android.R.drawable.ic_media_ff, PIP_FORWARD),
     )
   }
 
