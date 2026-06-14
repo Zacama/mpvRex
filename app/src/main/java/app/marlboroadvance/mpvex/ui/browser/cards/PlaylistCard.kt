@@ -6,10 +6,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.PlaylistPlay
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.database.entities.PlaylistEntity
 import app.marlboroadvance.mpvex.domain.media.model.Video
 import app.marlboroadvance.mpvex.domain.media.model.VideoFolder
@@ -123,7 +125,7 @@ fun PlaylistCard(
 
   // Create a custom chip renderer for playlist type
   val customChipRenderer: @Composable () -> Unit = {
-    val chipText = if (playlist.isM3uPlaylist) "Network" else "Local"
+    val chipText = if (playlist.isM3uPlaylist) stringResource(R.string.network) else stringResource(R.string.playlist_local)
     val materialTheme = androidx.compose.material3.MaterialTheme.colorScheme
     val (chipColor, chipBgColor) = if (playlist.isM3uPlaylist) {
       Pair(materialTheme.tertiary, materialTheme.tertiaryContainer)

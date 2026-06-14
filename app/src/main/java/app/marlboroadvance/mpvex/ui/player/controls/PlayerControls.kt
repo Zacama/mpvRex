@@ -594,14 +594,17 @@ fun PlayerControls(
             }
             is PlayerUpdates.RepeatMode -> {
               val mode = (currentPlayerUpdate as PlayerUpdates.RepeatMode).mode
+              val osdRepeatOff = stringResource(R.string.osd_repeat_off)
+              val osdRepeatCurrent = stringResource(R.string.osd_repeat_current)
+              val osdRepeatAll = stringResource(R.string.osd_repeat_all)
               val text = when (mode) {
-                app.marlboroadvance.mpvex.ui.player.RepeatMode.OFF -> "Repeat: Off"
-                app.marlboroadvance.mpvex.ui.player.RepeatMode.ONE -> "Repeat: Current file"
+                app.marlboroadvance.mpvex.ui.player.RepeatMode.OFF -> osdRepeatOff
+                app.marlboroadvance.mpvex.ui.player.RepeatMode.ONE -> osdRepeatCurrent
                 app.marlboroadvance.mpvex.ui.player.RepeatMode.ALL -> {
                   if (playlistMode && viewModel.hasPlaylistSupport()) {
-                    "Repeat: All playlist"
+                    osdRepeatAll
                   } else {
-                    "Repeat: Current file"
+                    osdRepeatCurrent
                   }
                 }
               }
@@ -610,14 +613,17 @@ fun PlayerControls(
 
             is PlayerUpdates.Shuffle -> {
               val enabled = (currentPlayerUpdate as PlayerUpdates.Shuffle).enabled
+              val osdShuffleOn = stringResource(R.string.osd_shuffle_on)
+              val osdShuffleUnavailable = stringResource(R.string.osd_shuffle_unavailable)
+              val osdShuffleOff = stringResource(R.string.osd_shuffle_off)
               val text = if (enabled) {
                 if (playlistMode && viewModel.hasPlaylistSupport()) {
-                  "Shuffle: On"
+                  osdShuffleOn
                 } else {
-                  "Shuffle: Not available"
+                  osdShuffleUnavailable
                 }
               } else {
-                "Shuffle: Off"
+                osdShuffleOff
               }
               TextPlayerUpdate(text)
             }
@@ -625,9 +631,9 @@ fun PlayerControls(
             is PlayerUpdates.FrameInfo -> {
               val frameInfo = (currentPlayerUpdate as PlayerUpdates.FrameInfo)
               val text = if (frameInfo.totalFrames > 0) {
-                "Frame: ${frameInfo.currentFrame}/${frameInfo.totalFrames}"
+                stringResource(R.string.osd_frame_fmt2, frameInfo.currentFrame, frameInfo.totalFrames)
               } else {
-                "Frame: ${frameInfo.currentFrame}"
+                stringResource(R.string.osd_frame_fmt1, frameInfo.currentFrame)
               }
               TextPlayerUpdate(text)
             }
@@ -962,7 +968,7 @@ fun PlayerControls(
                   ) {
                     Icon(
                       imageVector = Icons.Default.SkipPrevious,
-                      contentDescription = "Previous",
+                      contentDescription = stringResource(R.string.control_previous),
                       tint =
                         if (viewModel.hasPrevious()) {
                           contentColor
@@ -1035,7 +1041,7 @@ fun PlayerControls(
                   ) {
                     Icon(
                       imageVector = Icons.Default.SkipNext,
-                      contentDescription = "Next",
+                      contentDescription = stringResource(R.string.control_next),
                       tint =
                         if (viewModel.hasNext()) {
                           contentColor
@@ -1480,7 +1486,7 @@ fun PlayerControls(
         ) {
           if (currentPlayerUpdate is PlayerUpdates.SpeedLockHint) {
             val update = currentPlayerUpdate as PlayerUpdates.SpeedLockHint
-            LockHint(text = if (update.isLocked) "Speed Locked" else "Swipe up to lock")
+            LockHint(text = if (update.isLocked) stringResource(R.string.osd_speed_locked) else stringResource(R.string.osd_swipe_to_lock))
           }
         }
 
@@ -1542,7 +1548,7 @@ fun PlayerControls(
                 Box(contentAlignment = Alignment.Center) {
                   Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = "Clear Loop",
+                    contentDescription = stringResource(R.string.control_clear_loop),
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(16.dp),
                   )

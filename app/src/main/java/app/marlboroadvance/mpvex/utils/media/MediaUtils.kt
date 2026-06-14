@@ -6,7 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.BuildConfig
+import app.marlboroadvance.mpvex.utils.withAppLocale
 import app.marlboroadvance.mpvex.domain.media.model.Video
 import app.marlboroadvance.mpvex.ui.player.PlayerActivity
 import app.marlboroadvance.mpvex.utils.history.RecentlyPlayedOps
@@ -304,7 +306,7 @@ object MediaUtils : KoinComponent {
     context.startActivity(
       Intent.createChooser(
         intent,
-        if (uris.size == 1) "Share video" else "Share ${uris.size} videos",
+        context.withAppLocale().resources.getQuantityString(R.plurals.share_videos_title, uris.size, uris.size),
       ),
     )
   }

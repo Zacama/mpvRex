@@ -21,10 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 
+/**
+ * [itemType] is a localized noun (one of the `item_type_*` strings) inserted
+ * into the "Rename %1$s" title. This compound message works for the current
+ * languages; languages with grammatical case/gender would need per-type
+ * title resources instead (see docs/i18n.md, "Known limitations").
+ */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun RenameDialog(
@@ -41,6 +49,8 @@ fun RenameDialog(
   val isError = remember { mutableStateOf(false) }
   val errorMessage = remember { mutableStateOf("") }
   val focusRequester = remember { FocusRequester() }
+  val errorEmpty = stringResource(R.string.rename_error_empty)
+  val errorInvalid = stringResource(R.string.rename_error_invalid)
 
   // Auto-focus text field
   LaunchedEffect(Unit) {
@@ -51,12 +61,12 @@ fun RenameDialog(
     when {
       baseName.value.isBlank() -> {
         isError.value = true
-        errorMessage.value = "Name cannot be empty"
+        errorMessage.value = errorEmpty
       }
 
       baseName.value.contains("/") || baseName.value.contains("\\") -> {
         isError.value = true
-        errorMessage.value = "Name cannot contain / or \\"
+        errorMessage.value = errorInvalid
       }
 
       else -> {
@@ -70,7 +80,7 @@ fun RenameDialog(
     onDismissRequest = onDismiss,
     title = {
       Text(
-        text = "Rename $itemType",
+        text = stringResource(R.string.rename_dialog_title, itemType),
         style = MaterialTheme.typography.headlineMedium,
         fontWeight = FontWeight.Bold,
       )
@@ -92,7 +102,7 @@ fun RenameDialog(
               Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester),
-            label = { Text("New name", fontWeight = FontWeight.Medium) },
+            label = { Text(stringResource(R.string.new_name), fontWeight = FontWeight.Medium) },
             singleLine = false,
             maxLines = 5,
             isError = isError.value,
@@ -131,7 +141,7 @@ fun RenameDialog(
         shape = MaterialTheme.shapes.extraLarge,
       ) {
         Text(
-          text = "Rename",
+          text = stringResource(R.string.rename),
           fontWeight = FontWeight.Bold,
         )
       }
@@ -141,7 +151,7 @@ fun RenameDialog(
         onClick = onDismiss,
         shape = MaterialTheme.shapes.extraLarge,
       ) {
-        Text("Cancel", fontWeight = FontWeight.Medium)
+        Text(stringResource(R.string.generic_cancel), fontWeight = FontWeight.Medium)
       }
     },
     containerColor = MaterialTheme.colorScheme.surface,

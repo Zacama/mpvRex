@@ -203,11 +203,11 @@ fun MediaLibraryContent() {
               onSearch = { },
               expanded = false,
               onExpandedChange = { },
-              placeholder = { Text("Search all videos...", maxLines = 1, overflow = TextOverflow.Ellipsis) },
-              leadingIcon = { Icon(Icons.Filled.Search, contentDescription = "Search") },
+              placeholder = { Text(stringResource(R.string.search_all_videos), maxLines = 1, overflow = TextOverflow.Ellipsis) },
+              leadingIcon = { Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.generic_search)) },
               trailingIcon = {
                 IconButton(onClick = { isSearching = false; searchQuery = "" }) {
-                  Icon(Icons.Filled.Close, contentDescription = "Cancel")
+                  Icon(Icons.Filled.Close, contentDescription = stringResource(R.string.generic_cancel))
                 }
               },
               modifier = Modifier.focusRequester(focusRequester),
@@ -251,7 +251,7 @@ fun MediaLibraryContent() {
             add(
               SelectionOverflowAction(
                 icon = Icons.Filled.Share,
-                label = "Share",
+                label = stringResource(R.string.generic_share),
                 onClick = { selectionManager.shareSelected() },
               )
             )
@@ -280,7 +280,7 @@ fun MediaLibraryContent() {
       if (!selectionManager.isInSelectionMode && isFabVisible.value && sortedVideosWithInfo.isNotEmpty()) {
         TooltipBox(
           positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
-          tooltip = { PlainTooltip { Text("Play recently played or first video") } },
+          tooltip = { PlainTooltip { Text(stringResource(R.string.play_recently_played_or_first)) } },
           state = rememberTooltipState(),
         ) {
           FloatingActionButton(
@@ -304,7 +304,7 @@ fun MediaLibraryContent() {
               }
             },
           ) {
-            Icon(Icons.Filled.PlayArrow, contentDescription = "Play recently played or first video")
+            Icon(Icons.Filled.PlayArrow, contentDescription = stringResource(R.string.play_recently_played_or_first))
           }
         }
       }
@@ -401,7 +401,7 @@ fun MediaLibraryContent() {
         },
         itemCount = selectionManager.selectedCount,
         isOpen = deleteDialogOpen.value,
-        itemType = "video"
+        titlePluralRes = R.plurals.delete_title_video,
       )
     }
 
@@ -416,7 +416,7 @@ fun MediaLibraryContent() {
           },
           currentName = video.displayName,
           isOpen = renameDialogOpen.value,
-          itemType = "video"
+          itemType = stringResource(R.string.item_type_video),
         )
       }
     }

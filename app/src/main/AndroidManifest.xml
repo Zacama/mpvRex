@@ -220,14 +220,14 @@
             android:name=".ui.mediainfo.MediaInfoActivity"
             android:exported="false"
             android:theme="@style/Theme.mpvex"
-            android:label="Media Info" />
+            android:label="@string/media_info" />
 
         <activity-alias
             android:name=".MediaInfoIntentHandler"
             android:targetActivity=".ui.mediainfo.MediaInfoActivity"
             android:exported="true"
             android:enabled="false"
-            android:label="Media Info">
+            android:label="@string/media_info">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -313,5 +313,15 @@
             android:authorities="${applicationId}.networkstreaming"
             android:exported="false"
             android:grantUriPermissions="true" />
+
+        <!-- Persists the in-app language choice on Android 12 and below -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
     </application>
 </manifest>

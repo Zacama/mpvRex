@@ -57,12 +57,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.database.repository.PlaylistRepository
 import app.marlboroadvance.mpvex.preferences.BrowserPreferences
 import app.marlboroadvance.mpvex.preferences.MediaLayoutMode
@@ -206,11 +208,11 @@ object PlaylistScreen : Screen {
                   onSearch = { },
                   expanded = false,
                   onExpandedChange = { },
-                  placeholder = { Text("Search playlists...") },
+                  placeholder = { Text(stringResource(R.string.search_playlists)) },
                   leadingIcon = {
                     Icon(
                       imageVector = Icons.Filled.Search,
-                      contentDescription = "Search",
+                      contentDescription = stringResource(R.string.generic_search),
                     )
                   },
                   trailingIcon = {
@@ -222,7 +224,7 @@ object PlaylistScreen : Screen {
                     ) {
                       Icon(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = "Cancel",
+                        contentDescription = stringResource(R.string.generic_cancel),
                       )
                     }
                   },
@@ -241,7 +243,7 @@ object PlaylistScreen : Screen {
             }
           } else {
             BrowserTopBar(
-              title = "Playlists",
+              title = stringResource(R.string.playlists),
               isInSelectionMode = selectionManager.isInSelectionMode,
               selectedCount = selectionManager.selectedCount,
               totalCount = playlistsWithCount.size,
@@ -268,7 +270,7 @@ object PlaylistScreen : Screen {
             ExtendedFloatingActionButton(
               onClick = { showPlaylistActionSheet = true },
               icon = { Icon(Icons.Filled.Add, contentDescription = null) },
-              text = { Text("Create Playlist") },
+              text = { Text(stringResource(R.string.create_playlist)) },
               modifier = Modifier.padding(bottom = navigationBarHeight)
             )
           }
@@ -284,8 +286,8 @@ object PlaylistScreen : Screen {
           ) {
             EmptyState(
               icon = Icons.Filled.Search,
-              title = "No playlists found",
-              message = "Try a different search term",
+              title = stringResource(R.string.playlist_none_found),
+              message = stringResource(R.string.search_try_different),
             )
           }
         } else if (playlistsWithCount.isEmpty() && hasCompletedInitialLoad) {
@@ -301,8 +303,8 @@ object PlaylistScreen : Screen {
             ) {
               EmptyState(
                 icon = Icons.AutoMirrored.Outlined.PlaylistAdd,
-                title = "No playlists yet",
-                message = "Create a playlist or add one from an m3u URL",
+                title = stringResource(R.string.playlist_none_yet),
+                message = stringResource(R.string.playlist_empty_message),
               )
             }
           }
@@ -347,12 +349,12 @@ object PlaylistScreen : Screen {
           var playlistName by remember { mutableStateOf(selectedPlaylist.playlist.name) }
           androidx.compose.material3.AlertDialog(
             onDismissRequest = { showRenameDialog = false },
-            title = { Text("Rename Playlist") },
+            title = { Text(stringResource(R.string.rename_playlist)) },
             text = {
               androidx.compose.material3.OutlinedTextField(
                 value = playlistName,
                 onValueChange = { playlistName = it },
-                label = { Text("Playlist Name") },
+                label = { Text(stringResource(R.string.playlist_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
               )
@@ -370,14 +372,14 @@ object PlaylistScreen : Screen {
                 },
                 enabled = playlistName.isNotBlank(),
               ) {
-                Text("Rename")
+                Text(stringResource(R.string.rename))
               }
             },
             dismissButton = {
               androidx.compose.material3.TextButton(
                 onClick = { showRenameDialog = false },
               ) {
-                Text("Cancel")
+                Text(stringResource(R.string.generic_cancel))
               }
             },
           )
@@ -393,7 +395,7 @@ object PlaylistScreen : Screen {
             showDeleteDialog = false
           },
           itemCount = selectionManager.selectedCount,
-          itemType = "playlist",
+          titlePluralRes = R.plurals.delete_title_playlist,
           itemNames = selectionManager.getSelectedItems().map { it.playlist.name },
         )
       }
@@ -423,8 +425,8 @@ object PlaylistScreen : Screen {
       onLongClick = onPlaylistLongClick,
       onToggleSelection = { selectionManager.toggle(it) },
       modifier = modifier,
-      emptyTitle = "No playlists found",
-      emptyMessage = "Create a playlist to see it listed here",
+      emptyTitle = stringResource(R.string.playlist_none_found),
+      emptyMessage = stringResource(R.string.playlist_empty_state_message),
       isRefreshing = isRefreshing,
       onRefresh = onRefresh,
       isInSelectionMode = isInSelectionMode,

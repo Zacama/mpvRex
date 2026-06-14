@@ -68,6 +68,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -92,6 +93,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.domain.media.model.Video
 import app.marlboroadvance.mpvex.presentation.Screen
 import app.marlboroadvance.mpvex.ui.browser.MainScreen
@@ -164,7 +166,7 @@ data class ShortsScreen(
                 )
             } else if (shorts.isEmpty()) {
                 Text(
-                    text = if (blockedOnly) "No blocked videos found" else "No vertical videos found",
+                    text = if (blockedOnly) stringResource(R.string.shorts_no_blocked_found) else stringResource(R.string.shorts_no_vertical),
                     color = Color.White,
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -314,14 +316,14 @@ private fun FinishedPageItem(onBack: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "All videos finished",
+                text = stringResource(R.string.shorts_all_finished_title),
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "You've seen all vertical videos for now.",
+                text = stringResource(R.string.shorts_all_finished_message),
                 color = Color.White.copy(alpha = 0.7f),
                 fontSize = 16.sp
             )
@@ -333,7 +335,7 @@ private fun FinishedPageItem(onBack: () -> Unit) {
                     .background(MaterialTheme.colorScheme.primary)
                     .padding(horizontal = 24.dp)
             ) {
-                Text("Go Back", color = Color.White, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.back), color = Color.White, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -560,13 +562,13 @@ private fun ShortPageItem(
             Box {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back),
                     tint = Color.Black,
                     modifier = Modifier.size(28.dp).graphicsLayer { translationX = 2f; translationY = 2f }
                 )
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back),
                     tint = Color.White,
                     modifier = Modifier.size(28.dp)
                 )
@@ -627,19 +629,19 @@ private fun ShortPageItem(
         if (showInfo) {
             AlertDialog(
                 onDismissRequest = { showInfo = false },
-                title = { Text(text = "Video Info") },
+                title = { Text(text = stringResource(R.string.shorts_video_info)) },
                 text = {
                     Column {
-                        Text(text = "Name: ${video.displayName}", fontWeight = FontWeight.Bold)
+                        Text(text = stringResource(R.string.shorts_info_name, video.displayName), fontWeight = FontWeight.Bold)
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Resolution: ${video.width}x${video.height}")
+                        Text(text = stringResource(R.string.shorts_info_resolution, video.width, video.height))
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Path: ${video.path}", fontSize = 12.sp)
+                        Text(text = stringResource(R.string.path_fmt, video.path), fontSize = 12.sp)
                     }
                 },
                 confirmButton = {
                     TextButton(onClick = { showInfo = false }) {
-                        Text("Close")
+                        Text(stringResource(R.string.close))
                     }
                 }
             )
@@ -726,8 +728,8 @@ private fun MoreActionsSheet(
     ) {
         Column(modifier = Modifier.padding(bottom = 32.dp)) {
             ListItem(
-                headlineContent = { Text("Auto Swipe to Next Short") },
-                supportingContent = { Text("Swipe automatically when video ends") },
+                headlineContent = { Text(stringResource(R.string.pref_shorts_auto_swipe_title)) },
+                supportingContent = { Text(stringResource(R.string.shorts_auto_swipe_short_desc)) },
                 leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
                 trailingContent = {
                     Switch(
@@ -763,13 +765,13 @@ private fun MoreActionsSheet(
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )
             ListItem(
-                headlineContent = { Text("Video Information") },
+                headlineContent = { Text(stringResource(R.string.shorts_video_info)) },
                 leadingContent = { Icon(Icons.Default.Info, contentDescription = null) },
                 modifier = Modifier.clickable { onShowInfo() },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )
             ListItem(
-                headlineContent = { Text("Blocked Videos Manager") },
+                headlineContent = { Text(stringResource(R.string.shorts_blocked_manager)) },
                 leadingContent = { Icon(Icons.Default.Block, contentDescription = null) },
                 modifier = Modifier.clickable { onShowBlocked() },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -798,7 +800,7 @@ private fun ActionColumn(
         Box(modifier = Modifier.alpha(0.8f)) {
             ActionButton(
                 icon = if (isLoved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                label = if (isLoved) "Loved" else "Love",
+                label = if (isLoved) stringResource(R.string.shorts_loved) else stringResource(R.string.shorts_love),
                 iconColor = if (isLoved) Color.Red else Color.White,
                 onClick = onLove,
                 modifier = Modifier.onGloballyPositioned { coords ->
@@ -817,7 +819,7 @@ private fun ActionColumn(
         
         ActionButton(
             icon = Icons.Filled.Block, 
-            label = if (isBlocked) "Blocked" else "Block", 
+            label = if (isBlocked) stringResource(R.string.shorts_blocked_label) else stringResource(R.string.shorts_block), 
             iconColor = if (isBlocked) Color.Red else Color.White,
             onClick = onBlock
         )
@@ -832,7 +834,7 @@ private fun ActionColumn(
         
         Spacer(modifier = Modifier.height(12.dp))
         
-        ActionButton(icon = Icons.Filled.MoreVert, label = "More", onClick = onMore)
+        ActionButton(icon = Icons.Filled.MoreVert, label = stringResource(R.string.generic_more), onClick = onMore)
     }
 }
 

@@ -43,12 +43,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.utils.media.MediaFormatter
 import app.marlboroadvance.mpvex.utils.media.MediaInfoOps
 import kotlinx.coroutines.Dispatchers
@@ -96,7 +98,7 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
                     }
                     isLoading = false
                 }.onFailure { e ->
-                    error = e.message ?: "Failed to load media information"
+                    error = e.message ?: context.getString(R.string.media_info_load_failed)
                     isLoading = false
                 }
             } catch (e: Exception) {
@@ -130,7 +132,7 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Media Info",
+                    text = stringResource(R.string.media_info),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                 )
@@ -149,14 +151,14 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
                             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText("Media Info - $fileName", textContent!!)
                             clipboard.setPrimaryClip(clip)
-                            Toast.makeText(context, "Copied to clipboard", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.copied_to_clipboard), Toast.LENGTH_SHORT).show()
                         },
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
                             containerColor = MaterialTheme.colorScheme.secondaryContainer,
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         ),
                     ) {
-                        Icon(Icons.Filled.ContentCopy, contentDescription = "Copy")
+                        Icon(Icons.Filled.ContentCopy, contentDescription = stringResource(R.string.copy))
                     }
                     Spacer(modifier = Modifier.width(4.dp))
                     FilledTonalIconButton(
@@ -168,7 +170,7 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         ),
                     ) {
-                        Icon(Icons.Filled.Share, contentDescription = "Share")
+                        Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.generic_share))
                     }
                 }
             }
@@ -190,7 +192,7 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
                     ) {
                         CircularProgressIndicator(modifier = Modifier.size(40.dp))
                         Text(
-                            text = "Analyzing media file...",
+                            text = stringResource(R.string.media_info_analyzing),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -209,7 +211,7 @@ fun MediaInfoSheet(uri: Uri, onDismiss: () -> Unit) {
                         shape = MaterialTheme.shapes.extraLarge,
                     ) {
                         Text(
-                            text = "Error: $error",
+                            text = stringResource(R.string.generic_error_fmt, error ?: ""),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onErrorContainer,
                             modifier = Modifier.padding(24.dp),
@@ -333,11 +335,11 @@ private suspend fun shareMediaInfo(context: Context, content: String, fileName: 
                     putExtra(Intent.EXTRA_TEXT, "Media information for: $fileName")
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
-                context.startActivity(Intent.createChooser(shareIntent, "Share Media Info"))
+                context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_media_info)))
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {
-                Toast.makeText(context, "Failed to share: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.share_failed, e.message), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -371,7 +373,7 @@ fun MultiSelectionInfoSheet(count: Int, totalBytes: Long, totalDurationMs: Long,
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Text(
-                text = "Selection Info",
+                text = stringResource(R.string.selection_info),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
             )
@@ -389,7 +391,7 @@ fun MultiSelectionInfoSheet(count: Int, totalBytes: Long, totalDurationMs: Long,
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text = "Selected",
+                            text = stringResource(R.string.generic_selected),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -406,7 +408,7 @@ fun MultiSelectionInfoSheet(count: Int, totalBytes: Long, totalDurationMs: Long,
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text = "Total size",
+                            text = stringResource(R.string.file_op_total_size),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -423,7 +425,7 @@ fun MultiSelectionInfoSheet(count: Int, totalBytes: Long, totalDurationMs: Long,
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
-                            text = "Total length",
+                            text = stringResource(R.string.total_length),
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,

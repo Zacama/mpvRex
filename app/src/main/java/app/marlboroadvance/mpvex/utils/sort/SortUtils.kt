@@ -86,39 +86,6 @@ object SortUtils {
     return orderedFolders + orderedVideos
   }
 
-  // Legacy string-based sorting (for backward compatibility)
-  @Deprecated(
-    "Use enum-based sortVideos instead",
-    ReplaceWith(
-      "sortVideos(videos, VideoSortType.valueOf(sortType), if (sortOrderAsc) SortOrder.Ascending else SortOrder.Descending)",
-    ),
-  )
-  fun sortVideos(
-    videos: List<Video>,
-    sortType: String,
-    sortOrderAsc: Boolean,
-  ): List<Video> {
-    val type = VideoSortType.entries.find { it.displayName == sortType } ?: VideoSortType.Title
-    val order = if (sortOrderAsc) SortOrder.Ascending else SortOrder.Descending
-    return sortVideos(videos, type, order)
-  }
-
-  @Deprecated(
-    "Use enum-based sortFolders instead",
-    ReplaceWith(
-      "sortFolders(folders, FolderSortType.valueOf(sortType), if (sortOrderAsc) SortOrder.Ascending else SortOrder.Descending)",
-    ),
-  )
-  fun sortFolders(
-    folders: List<VideoFolder>,
-    sortType: String,
-    sortOrderAsc: Boolean,
-  ): List<VideoFolder> {
-    val type = FolderSortType.entries.find { it.displayName == sortType } ?: FolderSortType.Title
-    val order = if (sortOrderAsc) SortOrder.Ascending else SortOrder.Descending
-    return sortFolders(folders, type, order)
-  }
-
   class NaturalOrderComparator(
     private val ignoreCase: Boolean,
     private val shouldSkip: (Char) -> Boolean,

@@ -562,8 +562,6 @@
     <string name="invalid_subtitle_format">Formato de archivo de subtítulos no válido</string>
     <string name="subtitle_added">%s añadido</string>
     <string name="failed_load_subtitle">Error al cargar el subtítulo</string>
-    <string name="remove_from_playlist">¿Eliminar %1$d %2$s de la lista de reproducción?</string>
-    <string name="remove_playlist_items_confirm">Los %2$s seleccionados se eliminarán de esta lista de reproducción. Los %3$s originales no se borrarán.</string>
     <string name="search_videos">Buscar videos…</string>
     <string name="search_folders_and_videos">Buscar carpetas y videos…</string>
     <string name="search_playlists">Buscar listas de reproducción…</string>

@@ -68,6 +68,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -88,6 +89,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import java.io.File
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.PlayerPreferences
 import app.marlboroadvance.mpvex.presentation.Screen
 import androidx.compose.foundation.layout.imePadding
@@ -155,9 +157,9 @@ object CustomButtonScreen : Screen {
                     context.contentResolver.openOutputStream(it)?.use { output ->
                         output.write(xmlContent.toByteArray())
                     }
-                    Toast.makeText(context, "Buttons exported successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, context.getString(R.string.custom_button_export_success), Toast.LENGTH_SHORT).show()
                 }.onFailure { e ->
-                    Toast.makeText(context, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, context.getString(R.string.settings_export_failed, e.message), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -180,7 +182,7 @@ object CustomButtonScreen : Screen {
                     
                     showImportDialog = true
                 }.onFailure { e ->
-                    Toast.makeText(context, "Failed to read file: ${e.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, context.getString(R.string.custom_button_read_failed, e.message), Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -228,13 +230,13 @@ object CustomButtonScreen : Screen {
                     title = {
                         Column {
                             Text(
-                                text = "Custom Buttons",
+                                text = stringResource(R.string.custom_button_screen_title),
                                 style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.ExtraBold,
                                 color = MaterialTheme.colorScheme.primary,
                             )
                             Text(
-                                text = "Drag to reorder • Tap any slot to expand & edit",
+                                text = stringResource(R.string.custom_button_screen_subtitle),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -244,7 +246,7 @@ object CustomButtonScreen : Screen {
                         IconButton(onClick = backstack::removeLastOrNull) {
                             Icon(
                                 Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back",
+                                contentDescription = stringResource(R.string.back),
                                 tint = MaterialTheme.colorScheme.secondary,
                             )
                         }
@@ -288,7 +290,7 @@ object CustomButtonScreen : Screen {
                             dragHandle = { interceptModifier ->
                                 Icon(
                                     Icons.Default.DragHandle,
-                                    contentDescription = "Drag to reorder",
+                                    contentDescription = stringResource(R.string.custom_button_drag_to_reorder),
                                     modifier = interceptModifier
                                         .draggableHandle()
                                         .padding(horizontal = 8.dp, vertical = 12.dp),
@@ -325,14 +327,14 @@ object CustomButtonScreen : Screen {
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Text(
-                                text = "Import / Export",
+                                text = stringResource(R.string.custom_button_import_export),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface,
                             )
                             
                             Text(
-                                text = "Backup or share all your custom buttons with their Lua code as an XML file",
+                                text = stringResource(R.string.custom_button_import_export_summary),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -352,7 +354,7 @@ object CustomButtonScreen : Screen {
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(Modifier.width(8.dp))
-                                    Text("Import")
+                                    Text(stringResource(R.string.generic_import))
                                 }
                                 
                                 Button(
@@ -366,7 +368,7 @@ object CustomButtonScreen : Screen {
                                         modifier = Modifier.size(18.dp)
                                     )
                                     Spacer(Modifier.width(8.dp))
-                                    Text("Export")
+                                    Text(stringResource(R.string.generic_export))
                                 }
                             }
                         }
@@ -396,7 +398,15 @@ object CustomButtonScreen : Screen {
                             buttonSlots[slotIndex] = importedSlots[slotIndex]
                         }
                     }
-                    Toast.makeText(context, "Imported ${selectedImportSlots.size} button(s)", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.resources.getQuantityString(
+                            R.plurals.custom_button_imported,
+                            selectedImportSlots.size,
+                            selectedImportSlots.size,
+                        ),
+                        Toast.LENGTH_SHORT,
+                    ).show()
                     showImportDialog = false
                     selectedImportSlots = emptySet()
                 },
@@ -488,7 +498,7 @@ fun ButtonSlotCard(
                 Column(Modifier.weight(1f)) {
                     val titleAlpha = if (isPopulated && !draftEnabled) 0.4f else 1f
                     Text(
-                        text = draftTitle.ifBlank { if (isPopulated) button!!.title else "Empty slot" },
+                        text = draftTitle.ifBlank { if (isPopulated) button!!.title else stringResource(R.string.custom_button_empty_slot) },
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = if (isPopulated) FontWeight.SemiBold else FontWeight.Normal,
                         color = if (isPopulated)
@@ -520,7 +530,7 @@ fun ButtonSlotCard(
                             contentColor   = MaterialTheme.colorScheme.onErrorContainer,
                         ),
                     ) {
-                        Icon(Icons.Default.Delete, contentDescription = "Delete", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete), modifier = Modifier.size(18.dp))
                     }
                     Spacer(Modifier.width(4.dp))
                 }
@@ -541,7 +551,7 @@ fun ButtonSlotCard(
                     // Disabled drag handle for empty slots
                     Icon(
                         Icons.Default.DragHandle,
-                        contentDescription = "Drag disabled",
+                        contentDescription = stringResource(R.string.custom_button_drag_disabled),
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f),
                     )
@@ -589,9 +599,9 @@ fun ButtonSlotCard(
     if (activeLuaField != null) {
         val fieldKey = activeLuaField!!
         val fieldLabel = when (fieldKey) {
-            "content"   -> "Tap action  ·  $slotLabel"
-            "longPress" -> "Long press  ·  $slotLabel"
-            "startup"   -> "On startup  ·  $slotLabel"
+            "content"   -> stringResource(R.string.custom_button_field_tap, slotLabel)
+            "longPress" -> stringResource(R.string.custom_button_field_longpress, slotLabel)
+            "startup"   -> stringResource(R.string.custom_button_field_startup, slotLabel)
             else        -> fieldKey
         }
         val fieldValue = when (fieldKey) {
@@ -640,14 +650,14 @@ fun ButtonSlotCard(
                         },
                         navigationIcon = {
                             IconButton(onClick = { dismissAndSave() }) {
-                                Icon(Icons.AutoMirrored.Outlined.ArrowBack, "Back")
+                                Icon(Icons.AutoMirrored.Outlined.ArrowBack, stringResource(R.string.back))
                             }
                         },
                         actions = {
                             IconButton(onClick = { dismissAndSave() }) {
                                 Icon(
                                     Icons.Default.Check,
-                                    contentDescription = "Done",
+                                    contentDescription = stringResource(R.string.done),
                                     tint = MaterialTheme.colorScheme.primary,
                                 )
                             }
@@ -721,7 +731,7 @@ fun ButtonExpandedContent(
         OutlinedTextField(
             value         = draftTitle,
             onValueChange = onTitleChange,
-            label         = { Text("Button title *") },
+            label         = { Text(stringResource(R.string.custom_button_title_label)) },
             modifier      = Modifier.fillMaxWidth(),
             singleLine    = true,
             shape         = RoundedCornerShape(12.dp),
@@ -731,7 +741,7 @@ fun ButtonExpandedContent(
 
         // Tap action — required
         LuaEditorEntryCard(
-            label      = "Tap action *",
+            label      = stringResource(R.string.custom_button_tap_action),
             code       = draftContent,
             isRequired = true,
             onClick    = { onOpenLuaEditor("content") },
@@ -739,14 +749,14 @@ fun ButtonExpandedContent(
 
         // Long press
         LuaEditorEntryCard(
-            label   = "Long press action",
+            label   = stringResource(R.string.custom_button_long_press_action),
             code    = draftLongPress,
             onClick = { onOpenLuaEditor("longPress") },
         )
 
         // On startup
         LuaEditorEntryCard(
-            label   = "On startup",
+            label   = stringResource(R.string.custom_button_on_startup),
             code    = draftStartup,
             onClick = { onOpenLuaEditor("startup") },
         )
@@ -761,13 +771,17 @@ fun ButtonExpandedContent(
         ) {
             Column(Modifier.weight(1f)) {
                 Text(
-                    text  = "Button enabled",
+                    text  = stringResource(R.string.custom_button_enabled),
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text  = if (draftEnabled) "Button is active in the player" else "Button is saved but hidden",
+                    text  = if (draftEnabled) {
+                        stringResource(R.string.custom_button_enabled_summary)
+                    } else {
+                        stringResource(R.string.custom_button_disabled_summary)
+                    },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -783,13 +797,13 @@ fun ButtonExpandedContent(
             horizontalArrangement = Arrangement.End,
             modifier              = Modifier.fillMaxWidth(),
         ) {
-            TextButton(onClick = onCollapse) { Text("Cancel") }
+            TextButton(onClick = onCollapse) { Text(stringResource(R.string.generic_cancel)) }
             Spacer(Modifier.width(8.dp))
             TextButton(
                 onClick = onSave,
                 enabled = draftTitle.isNotBlank(),
             ) {
-                Text(if (isPopulated) "Save" else "Add button")
+                Text(if (isPopulated) stringResource(R.string.generic_save) else stringResource(R.string.custom_button_add))
             }
         }
     }
@@ -893,7 +907,7 @@ fun LuaEditorEntryCard(
                     )
                 } else {
                     Text(
-                        text = "Tap to write Lua code…",
+                        text = stringResource(R.string.custom_button_tap_to_write_lua),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                     )
@@ -931,13 +945,13 @@ fun ImportSelectionScreen(
                 title = {
                     Column {
                         Text(
-                            text = "Select Buttons to Import",
+                            text = stringResource(R.string.custom_button_select_import),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary,
                         )
                         Text(
-                            text = "Choose which buttons to import",
+                            text = stringResource(R.string.custom_button_select_import_summary),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -947,7 +961,7 @@ fun ImportSelectionScreen(
                     IconButton(onClick = onDismiss) {
                         Icon(
                             Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = "Cancel",
+                            contentDescription = stringResource(R.string.generic_cancel),
                             tint = MaterialTheme.colorScheme.secondary,
                         )
                     }
@@ -967,7 +981,7 @@ fun ImportSelectionScreen(
                     ) {
                         Icon(
                             Icons.Default.FileDownload,
-                            contentDescription = "Import",
+                            contentDescription = stringResource(R.string.generic_import),
                         )
                     }
                 },
@@ -1078,7 +1092,7 @@ fun ImportSelectionScreen(
                                     )
                                     Spacer(Modifier.width(4.dp))
                                     Text(
-                                        text = "Will overwrite existing button",
+                                        text = stringResource(R.string.custom_button_overwrite_warning),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.error,
                                     )
