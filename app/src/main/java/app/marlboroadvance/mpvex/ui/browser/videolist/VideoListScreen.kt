@@ -389,7 +389,7 @@ data class VideoListScreen(
             add(
               SelectionOverflowAction(
                 icon = Icons.Filled.Share,
-                label = "Share",
+                label = stringResource(R.string.generic_share),
                 onClick = { selectionManager.shareSelected() },
               )
             )
@@ -419,7 +419,7 @@ data class VideoListScreen(
         if (sortedVideosWithInfo.isNotEmpty()) {
           TooltipBox(
             positionProvider = TooltipDefaults.rememberTooltipPositionProvider(TooltipAnchorPosition.Above),
-            tooltip = { PlainTooltip { Text("Play recently played or first video") } },
+            tooltip = { PlainTooltip { Text(stringResource(R.string.play_recently_played_or_first)) } },
             state = rememberTooltipState(),
           ) {
             FloatingActionButton(
@@ -446,7 +446,7 @@ data class VideoListScreen(
                 }
               },
             ) {
-              Icon(Icons.Filled.PlayArrow, contentDescription = "Play recently played or first video")
+              Icon(Icons.Filled.PlayArrow, contentDescription = stringResource(R.string.play_recently_played_or_first))
             }
           }
         }
@@ -542,7 +542,7 @@ data class VideoListScreen(
         isOpen = deleteDialogOpen.value,
         onDismiss = { deleteDialogOpen.value = false },
         onConfirm = { selectionManager.deleteSelected() },
-        itemType = "video",
+        titlePluralRes = R.plurals.delete_title_video,
         itemCount = selectionManager.selectedCount,
         itemNames = selectionManager.getSelectedItems().map { it.displayName },
       )
@@ -558,7 +558,7 @@ data class VideoListScreen(
             onDismiss = { renameDialogOpen.value = false },
             onConfirm = { newName -> selectionManager.renameSelected(newName) },
             currentName = baseName,
-            itemType = "file",
+            itemType = stringResource(R.string.item_type_file),
             extension = if (extension != ".") extension else null,
           )
         }
@@ -642,7 +642,7 @@ data class VideoListScreen(
       // Private Space Loading Dialog
       LoadingDialog(
         isOpen = movingToPrivateSpace.value,
-        message = "Moving to private space...",
+        message = stringResource(R.string.private_space_moving),
       )
 
       // Private Space Completion Dialog
@@ -651,7 +651,7 @@ data class VideoListScreen(
           onDismissRequest = { showPrivateSpaceCompletionDialog.value = false },
           title = {
             Text(
-              text = "Moved to Private Space",
+              text = stringResource(R.string.private_space_moved),
               style = MaterialTheme.typography.headlineSmall,
             )
           },
@@ -667,7 +667,7 @@ data class VideoListScreen(
             androidx.compose.material3.Button(
               onClick = { showPrivateSpaceCompletionDialog.value = false },
             ) {
-              Text("Close")
+              Text(stringResource(R.string.close))
             }
           },
         )

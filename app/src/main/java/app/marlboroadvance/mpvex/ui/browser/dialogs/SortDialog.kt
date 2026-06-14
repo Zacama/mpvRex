@@ -33,6 +33,8 @@ import androidx.compose.material.icons.filled.Title
 import androidx.compose.material.icons.filled.VideoLibrary
 import androidx.compose.material.icons.filled.ViewModule
 import androidx.compose.material3.AlertDialog
+import androidx.compose.ui.res.stringResource
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.BrowserPreferences
 import app.marlboroadvance.mpvex.preferences.AppearancePreferences
 import app.marlboroadvance.mpvex.preferences.FolderSortType
@@ -74,6 +76,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+/**
+ * Generic sort & view dialog. [sortType]/[types] are *localized labels* that
+ * double as identity: callers map them back to their enums by comparing
+ * strings. Translations of the sort type names (Title/Duration/Date/Size/
+ * Count) must therefore stay distinct within each language — a collision
+ * makes the affected option unselectable (no crash). See docs/i18n.md
+ * ("Known limitations") for the typed-interface fix if this ever bites.
+ */
 @Composable
 fun SortDialog(
   isOpen: Boolean,
@@ -275,7 +285,7 @@ private fun SortTypeSelector(
       verticalAlignment = Alignment.CenterVertically,
     ) {
       Text(
-        text = "Sort by",
+        text = stringResource(R.string.sort_dialog_sort_by),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Medium,
         color = MaterialTheme.colorScheme.onSurface,
@@ -302,7 +312,7 @@ private fun SortTypeSelector(
         )
         Icon(
           imageVector = icon,
-          contentDescription = "Toggle Sort Order",
+          contentDescription = stringResource(R.string.sort_dialog_toggle_sort_order),
           tint = MaterialTheme.colorScheme.onSecondaryContainer,
           modifier = Modifier.size(16.dp)
         )
@@ -565,7 +575,7 @@ private fun ContentTogglesSection(
 ) {
   SectionCard(modifier = modifier) {
     Text(
-      text = "Filters",
+      text = stringResource(R.string.sort_dialog_filters),
       style = MaterialTheme.typography.titleMedium,
       fontWeight = FontWeight.Medium,
       color = MaterialTheme.colorScheme.onSurface,
@@ -655,7 +665,7 @@ private fun VisibilityTogglesSection(
       verticalAlignment = Alignment.CenterVertically,
     ) {
       Text(
-        text = "Fields",
+        text = stringResource(R.string.sort_dialog_fields),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Medium,
         color = MaterialTheme.colorScheme.onSurface,
@@ -663,7 +673,11 @@ private fun VisibilityTogglesSection(
 
       Icon(
         imageVector = if (expanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.ArrowDropDown,
-        contentDescription = if (expanded) "Collapse" else "Expand",
+        contentDescription = if (expanded) {
+          stringResource(R.string.sort_dialog_collapse)
+        } else {
+          stringResource(R.string.sort_dialog_expand)
+        },
         tint = MaterialTheme.colorScheme.onSurfaceVariant,
       )
     }
@@ -727,7 +741,7 @@ private fun GridColumnSelectorComponent(
     )
 
     Text(
-      text = "${gridColumnSelector.currentValue} columns",
+      text = stringResource(R.string.sort_dialog_columns_count, gridColumnSelector.currentValue),
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -745,7 +759,7 @@ private fun GridColumnsSection(
 
   SectionCard(modifier = modifier) {
     Text(
-      text = "Grid Columns",
+      text = stringResource(R.string.sort_dialog_grid_columns),
       style = MaterialTheme.typography.titleMedium,
       fontWeight = FontWeight.Medium,
       color = MaterialTheme.colorScheme.onSurface,
@@ -762,7 +776,7 @@ private fun GridColumnsSection(
           verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
           Text(
-            text = "Folder Grid",
+            text = stringResource(R.string.sort_dialog_folder_grid),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
           )
@@ -774,7 +788,7 @@ private fun GridColumnsSection(
             modifier = Modifier.fillMaxWidth(),
           )
           Text(
-            text = "${folderGridColumnSelector.currentValue} columns",
+            text = stringResource(R.string.sort_dialog_columns_count, folderGridColumnSelector.currentValue),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -788,7 +802,7 @@ private fun GridColumnsSection(
           verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
           Text(
-            text = "Video Grid",
+            text = stringResource(R.string.sort_dialog_video_grid),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
           )
@@ -800,7 +814,7 @@ private fun GridColumnsSection(
             modifier = Modifier.fillMaxWidth(),
           )
           Text(
-            text = "${videoGridColumnSelector.currentValue} columns",
+            text = stringResource(R.string.sort_dialog_columns_count, videoGridColumnSelector.currentValue),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -810,6 +824,27 @@ private fun GridColumnsSection(
     }
   }
 }
+
+/**
+ * Ascending/descending labels keyed by the localized sort type name.
+ * Shared by FolderSortType and VideoSortType since both use the same type names.
+ */
+@Composable
+private fun sortOrderLabels(): Map<String, Pair<String, String>> =
+  mapOf(
+    stringResource(R.string.sort_type_title) to
+      (stringResource(R.string.sort_order_a_z) to stringResource(R.string.sort_order_z_a)),
+    stringResource(R.string.sort_type_duration) to
+      (stringResource(R.string.sort_order_shortest) to stringResource(R.string.sort_order_longest)),
+    stringResource(R.string.sort_type_date) to
+      (stringResource(R.string.sort_order_oldest) to stringResource(R.string.sort_order_newest)),
+    stringResource(R.string.sort_type_size) to
+      (stringResource(R.string.sort_order_smallest) to stringResource(R.string.sort_order_largest)),
+  )
+
+@Composable
+private fun defaultSortOrderLabels(): Pair<String, String> =
+  stringResource(R.string.sort_order_asc) to stringResource(R.string.sort_order_desc)
 
 @Composable
 fun FolderSortDialog(
@@ -840,13 +875,16 @@ fun FolderSortDialog(
 
   val configuration = androidx.compose.ui.platform.LocalConfiguration.current
   val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+  val orientationLabel = stringResource(
+    if (isLandscape) R.string.generic_landscape else R.string.generic_portrait,
+  )
 
   val folderGridColumns = if (isLandscape) folderGridColumnsLandscape else folderGridColumnsPortrait
   val videoGridColumns = if (isLandscape) videoGridColumnsLandscape else videoGridColumnsPortrait
 
   val folderGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_grid_columns_fmt, orientationLabel),
       currentValue = folderGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.folderGridColumnsLandscape.set(it)
@@ -859,7 +897,7 @@ fun FolderSortDialog(
 
   val videoGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Video Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_video_grid_columns_fmt, orientationLabel),
       currentValue = videoGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.videoGridColumnsLandscape.set(it)
@@ -872,14 +910,23 @@ fun FolderSortDialog(
 
   val isAlbumView = folderViewMode == FolderViewMode.AlbumView
 
+  val typeNames = FolderSortType.entries.associateWith { stringResource(it.titleRes) }
+  val orderLabels = sortOrderLabels()
+  val defaultOrderLabels = defaultSortOrderLabels()
+
   SortDialog(
     isOpen = isOpen,
     onDismiss = onDismiss,
-    title = if (isAlbumView) "Sort & View Options" else "View Options",
-    sortType = sortType.displayName,
+    title = if (isAlbumView) {
+      stringResource(R.string.sort_dialog_title_sort_view)
+    } else {
+      stringResource(R.string.sort_dialog_title_view)
+    },
+    sortType = typeNames.getValue(sortType),
     onSortTypeChange = { typeName ->
-      FolderSortType.entries
-        .find { it.displayName == typeName }
+      typeNames.entries
+        .find { it.value == typeName }
+        ?.key
         ?.let(onSortTypeChange)
     },
     sortOrderAsc = sortOrder.isAscending,
@@ -887,10 +934,10 @@ fun FolderSortDialog(
       onSortOrderChange(if (isAsc) SortOrder.Ascending else SortOrder.Descending)
     },
     types = listOf(
-      FolderSortType.Title.displayName,
-      FolderSortType.Duration.displayName,
-      FolderSortType.Date.displayName,
-      FolderSortType.Size.displayName,
+      typeNames.getValue(FolderSortType.Title),
+      typeNames.getValue(FolderSortType.Duration),
+      typeNames.getValue(FolderSortType.Date),
+      typeNames.getValue(FolderSortType.Size),
     ),
     icons = listOf(
       Icons.Filled.Title,
@@ -898,33 +945,25 @@ fun FolderSortDialog(
       Icons.Filled.CalendarToday,
       Icons.Filled.SwapVert,
     ),
-    getLabelForType = { type, _ ->
-      when (type) {
-        FolderSortType.Title.displayName -> Pair("A-Z", "Z-A")
-        FolderSortType.Duration.displayName -> Pair("Shortest", "Longest")
-        FolderSortType.Date.displayName -> Pair("Oldest", "Newest")
-        FolderSortType.Size.displayName -> Pair("Smallest", "Largest")
-        else -> Pair("Asc", "Desc")
-      }
-    },
+    getLabelForType = { type, _ -> orderLabels[type] ?: defaultOrderLabels },
     showSortOptions = isAlbumView,
     viewModeSelector = MultiViewModeSelector(
-      label = "View Mode",
+      label = stringResource(R.string.sort_dialog_view_mode),
       options = listOf(
         ViewModeOption(
-          label = "Folder",
+          label = stringResource(R.string.sort_dialog_view_mode_folder),
           icon = Icons.Filled.ViewModule,
           isSelected = folderViewMode == FolderViewMode.AlbumView,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.AlbumView) }
         ),
         ViewModeOption(
-          label = "Tree",
+          label = stringResource(R.string.sort_dialog_view_mode_tree),
           icon = Icons.Filled.AccountTree,
           isSelected = folderViewMode == FolderViewMode.FileManager,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.FileManager) }
         ),
         ViewModeOption(
-          label = "Library",
+          label = stringResource(R.string.sort_dialog_view_mode_library),
           icon = Icons.Filled.VideoLibrary,
           isSelected = folderViewMode == FolderViewMode.MediaLibrary,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.MediaLibrary) }
@@ -932,9 +971,9 @@ fun FolderSortDialog(
       )
     ),
     layoutModeSelector = ViewModeSelector(
-      label = "Layout",
-      firstOptionLabel = "List",
-      secondOptionLabel = "Grid",
+      label = stringResource(R.string.sort_dialog_layout),
+      firstOptionLabel = stringResource(R.string.sort_dialog_layout_list),
+      secondOptionLabel = stringResource(R.string.sort_dialog_layout_grid),
       firstOptionIcon = Icons.AutoMirrored.Filled.ViewList,
       secondOptionIcon = Icons.Filled.GridView,
       isFirstOptionSelected = mediaLayoutMode == MediaLayoutMode.LIST,
@@ -946,49 +985,49 @@ fun FolderSortDialog(
     ),
     contentToggles = listOf(
       ContentToggle(
-        label = "Audio Files",
+        label = stringResource(R.string.sort_dialog_toggle_audio_files),
         checked = showAudioFiles,
         onCheckedChange = { browserPreferences.showAudioFiles.set(it) },
       ),
     ),
     visibilityToggles = listOf(
       VisibilityToggle(
-        label = "Full Name",
+        label = stringResource(R.string.sort_dialog_toggle_full_name),
         checked = unlimitedNameLines,
         onCheckedChange = { appearancePreferences.unlimitedNameLines.set(it) },
       ),
       VisibilityToggle(
-        label = "Path",
+        label = stringResource(R.string.sort_dialog_toggle_path),
         checked = showFolderPath,
         onCheckedChange = { browserPreferences.showFolderPath.set(it) },
       ),
       VisibilityToggle(
-        label = "Total Videos",
+        label = stringResource(R.string.sort_dialog_toggle_total_videos),
         checked = showTotalVideosChip,
         onCheckedChange = { browserPreferences.showTotalVideosChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Total Duration",
+        label = stringResource(R.string.sort_dialog_toggle_total_duration),
         checked = showTotalDurationChip,
         onCheckedChange = { browserPreferences.showTotalDurationChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Folder Size",
+        label = stringResource(R.string.sort_dialog_toggle_folder_size),
         checked = showTotalSizeChip,
         onCheckedChange = { browserPreferences.showTotalSizeChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Date",
+        label = stringResource(R.string.sort_dialog_toggle_date),
         checked = showDateChip,
         onCheckedChange = { browserPreferences.showDateChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Progress Bar",
+        label = stringResource(R.string.sort_dialog_toggle_progress_bar),
         checked = showProgressBar,
         onCheckedChange = { browserPreferences.showProgressBar.set(it) },
       ),
       VisibilityToggle(
-        label = "Subtitle Indicator",
+        label = stringResource(R.string.sort_dialog_toggle_subtitle_indicator),
         checked = showSubtitleIndicator,
         onCheckedChange = { browserPreferences.showSubtitleIndicator.set(it) },
       ),
@@ -1015,6 +1054,9 @@ fun VideoSortDialog(
 
   val configuration = androidx.compose.ui.platform.LocalConfiguration.current
   val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+  val orientationLabel = stringResource(
+    if (isLandscape) R.string.generic_landscape else R.string.generic_portrait,
+  )
 
   val videoGridColumns = if (isLandscape) videoGridColumnsLandscape else videoGridColumnsPortrait
   val folderGridColumns = if (isLandscape) folderGridColumnsLandscape else folderGridColumnsPortrait
@@ -1033,7 +1075,7 @@ fun VideoSortDialog(
 
   val folderGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Folder Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_folder_grid_columns_fmt, orientationLabel),
       currentValue = folderGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.folderGridColumnsLandscape.set(it)
@@ -1046,7 +1088,7 @@ fun VideoSortDialog(
 
   val videoGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_grid_columns_fmt, orientationLabel),
       currentValue = videoGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.videoGridColumnsLandscape.set(it)
@@ -1057,13 +1099,17 @@ fun VideoSortDialog(
     )
   } else null
 
+  val typeNames = VideoSortType.entries.associateWith { stringResource(it.titleRes) }
+  val orderLabels = sortOrderLabels()
+  val defaultOrderLabels = defaultSortOrderLabels()
+
   SortDialog(
     isOpen = isOpen,
     onDismiss = onDismiss,
-    title = "Sort & View Options",
-    sortType = sortType.displayName,
+    title = stringResource(R.string.sort_dialog_title_sort_view),
+    sortType = typeNames.getValue(sortType),
     onSortTypeChange = { typeName ->
-      VideoSortType.entries.find { it.displayName == typeName }?.let(onSortTypeChange)
+      typeNames.entries.find { it.value == typeName }?.key?.let(onSortTypeChange)
     },
     sortOrderAsc = sortOrder.isAscending,
     onSortOrderChange = { isAsc ->
@@ -1071,10 +1117,10 @@ fun VideoSortDialog(
     },
     types =
       listOf(
-        VideoSortType.Title.displayName,
-        VideoSortType.Duration.displayName,
-        VideoSortType.Date.displayName,
-        VideoSortType.Size.displayName,
+        typeNames.getValue(VideoSortType.Title),
+        typeNames.getValue(VideoSortType.Duration),
+        typeNames.getValue(VideoSortType.Date),
+        typeNames.getValue(VideoSortType.Size),
       ),
     icons =
       listOf(
@@ -1083,32 +1129,24 @@ fun VideoSortDialog(
         Icons.Filled.CalendarToday,
         Icons.Filled.SwapVert,
       ),
-    getLabelForType = { type, _ ->
-      when (type) {
-        VideoSortType.Title.displayName -> Pair("A-Z", "Z-A")
-        VideoSortType.Duration.displayName -> Pair("Shortest", "Longest")
-        VideoSortType.Date.displayName -> Pair("Oldest", "Newest")
-        VideoSortType.Size.displayName -> Pair("Smallest", "Biggest")
-        else -> Pair("Asc", "Desc")
-      }
-    },
+    getLabelForType = { type, _ -> orderLabels[type] ?: defaultOrderLabels },
     viewModeSelector = MultiViewModeSelector(
-      label = "View Mode",
+      label = stringResource(R.string.sort_dialog_view_mode),
       options = listOf(
         ViewModeOption(
-          label = "Folder",
+          label = stringResource(R.string.sort_dialog_view_mode_folder),
           icon = Icons.Filled.ViewModule,
           isSelected = folderViewMode == FolderViewMode.AlbumView,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.AlbumView) }
         ),
         ViewModeOption(
-          label = "Tree",
+          label = stringResource(R.string.sort_dialog_view_mode_tree),
           icon = Icons.Filled.AccountTree,
           isSelected = folderViewMode == FolderViewMode.FileManager,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.FileManager) }
         ),
         ViewModeOption(
-          label = "Library",
+          label = stringResource(R.string.sort_dialog_view_mode_library),
           icon = Icons.Filled.VideoLibrary,
           isSelected = folderViewMode == FolderViewMode.MediaLibrary,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.MediaLibrary) }
@@ -1116,9 +1154,9 @@ fun VideoSortDialog(
       )
     ),
     layoutModeSelector = ViewModeSelector(
-      label = "Layout",
-      firstOptionLabel = "List",
-      secondOptionLabel = "Grid",
+      label = stringResource(R.string.sort_dialog_layout),
+      firstOptionLabel = stringResource(R.string.sort_dialog_layout_list),
+      secondOptionLabel = stringResource(R.string.sort_dialog_layout_grid),
       firstOptionIcon = Icons.AutoMirrored.Filled.ViewList,
       secondOptionIcon = Icons.Filled.GridView,
       isFirstOptionSelected = mediaLayoutMode == MediaLayoutMode.LIST,
@@ -1130,7 +1168,7 @@ fun VideoSortDialog(
     ),
     contentToggles = listOf(
       ContentToggle(
-        label = "Audio Files",
+        label = stringResource(R.string.sort_dialog_toggle_audio_files),
         checked = showAudioFiles,
         onCheckedChange = { browserPreferences.showAudioFiles.set(it) },
       ),
@@ -1138,42 +1176,42 @@ fun VideoSortDialog(
     visibilityToggles =
       listOf(
         VisibilityToggle(
-          label = "Thumbnails",
+          label = stringResource(R.string.sort_dialog_toggle_thumbnails),
           checked = showThumbnails,
           onCheckedChange = { browserPreferences.showVideoThumbnails.set(it) },
         ),
         VisibilityToggle(
-          label = "Subtitle Indicator",
+          label = stringResource(R.string.sort_dialog_toggle_subtitle_indicator),
           checked = showSubtitleIndicator,
           onCheckedChange = { browserPreferences.showSubtitleIndicator.set(it) },
         ),
         VisibilityToggle(
-          label = "Full Name",
+          label = stringResource(R.string.sort_dialog_toggle_full_name),
           checked = unlimitedNameLines,
           onCheckedChange = { appearancePreferences.unlimitedNameLines.set(it) },
         ),
         VisibilityToggle(
-          label = "Size",
+          label = stringResource(R.string.sort_dialog_toggle_size),
           checked = showSizeChip,
           onCheckedChange = { browserPreferences.showSizeChip.set(it) },
         ),
         VisibilityToggle(
-          label = "Resolution",
+          label = stringResource(R.string.sort_dialog_toggle_resolution),
           checked = showResolutionChip,
           onCheckedChange = { browserPreferences.showResolutionChip.set(it) },
         ),
         VisibilityToggle(
-          label = "Framerate",
+          label = stringResource(R.string.sort_dialog_toggle_framerate),
           checked = showFramerateInResolution,
           onCheckedChange = { browserPreferences.showFramerateInResolution.set(it) },
         ),
         VisibilityToggle(
-          label = "Date",
+          label = stringResource(R.string.sort_dialog_toggle_date),
           checked = showDateChip,
           onCheckedChange = { browserPreferences.showDateChip.set(it) },
         ),
         VisibilityToggle(
-          label = "Progress Bar",
+          label = stringResource(R.string.sort_dialog_toggle_progress_bar),
           checked = showProgressBar,
           onCheckedChange = { browserPreferences.showProgressBar.set(it) },
         ),
@@ -1213,12 +1251,15 @@ fun FileSystemSortDialog(
 
   val configuration = androidx.compose.ui.platform.LocalConfiguration.current
   val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+  val orientationLabel = stringResource(
+    if (isLandscape) R.string.generic_landscape else R.string.generic_portrait,
+  )
   val folderGridColumns = if (isLandscape) folderGridColumnsLandscape else folderGridColumnsPortrait
   val videoGridColumns = if (isLandscape) videoGridColumnsLandscape else videoGridColumnsPortrait
 
   val folderGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_grid_columns_fmt, orientationLabel),
       currentValue = folderGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.folderGridColumnsLandscape.set(it)
@@ -1231,7 +1272,7 @@ fun FileSystemSortDialog(
 
   val videoGridColumnSelector = if (mediaLayoutMode == MediaLayoutMode.GRID) {
     GridColumnSelector(
-      label = "Video Grid Columns (${if (isLandscape) "Landscape" else "Portrait"})",
+      label = stringResource(R.string.sort_dialog_video_grid_columns_fmt, orientationLabel),
       currentValue = videoGridColumns,
       onValueChange = {
         if (isLandscape) browserPreferences.videoGridColumnsLandscape.set(it)
@@ -1242,13 +1283,17 @@ fun FileSystemSortDialog(
     )
   } else null
 
+  val typeNames = FolderSortType.entries.associateWith { stringResource(it.titleRes) }
+  val orderLabels = sortOrderLabels()
+  val defaultOrderLabels = defaultSortOrderLabels()
+
   SortDialog(
     isOpen = isOpen,
     onDismiss = onDismiss,
-    title = "Sort & View Options",
-    sortType = folderSortType.displayName,
+    title = stringResource(R.string.sort_dialog_title_sort_view),
+    sortType = typeNames.getValue(folderSortType),
     onSortTypeChange = { typeName ->
-      FolderSortType.entries.find { it.displayName == typeName }?.let {
+      typeNames.entries.find { it.value == typeName }?.key?.let {
         browserPreferences.folderSortType.set(it)
       }
     },
@@ -1260,10 +1305,10 @@ fun FileSystemSortDialog(
       )
     },
     types = listOf(
-      FolderSortType.Title.displayName,
-      FolderSortType.Duration.displayName,
-      FolderSortType.Date.displayName,
-      FolderSortType.Size.displayName,
+      typeNames.getValue(FolderSortType.Title),
+      typeNames.getValue(FolderSortType.Duration),
+      typeNames.getValue(FolderSortType.Date),
+      typeNames.getValue(FolderSortType.Size),
     ),
     icons = listOf(
       Icons.Filled.Title,
@@ -1271,33 +1316,25 @@ fun FileSystemSortDialog(
       Icons.Filled.CalendarToday,
       Icons.Filled.SwapVert,
     ),
-    getLabelForType = { type, _ ->
-      when (type) {
-        FolderSortType.Title.displayName -> Pair("A-Z", "Z-A")
-        FolderSortType.Duration.displayName -> Pair("Shortest", "Longest")
-        FolderSortType.Date.displayName -> Pair("Oldest", "Newest")
-        FolderSortType.Size.displayName -> Pair("Smallest", "Largest")
-        else -> Pair("Asc", "Desc")
-      }
-    },
+    getLabelForType = { type, _ -> orderLabels[type] ?: defaultOrderLabels },
     showSortOptions = true,
     viewModeSelector = MultiViewModeSelector(
-      label = "View Mode",
+      label = stringResource(R.string.sort_dialog_view_mode),
       options = listOf(
         ViewModeOption(
-          label = "Folder",
+          label = stringResource(R.string.sort_dialog_view_mode_folder),
           icon = Icons.Filled.ViewModule,
           isSelected = folderViewMode == FolderViewMode.AlbumView,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.AlbumView) }
         ),
         ViewModeOption(
-          label = "Tree",
+          label = stringResource(R.string.sort_dialog_view_mode_tree),
           icon = Icons.Filled.AccountTree,
           isSelected = folderViewMode == FolderViewMode.FileManager,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.FileManager) }
         ),
         ViewModeOption(
-          label = "Library",
+          label = stringResource(R.string.sort_dialog_view_mode_library),
           icon = Icons.Filled.VideoLibrary,
           isSelected = folderViewMode == FolderViewMode.MediaLibrary,
           onClick = { browserPreferences.folderViewMode.set(FolderViewMode.MediaLibrary) }
@@ -1305,9 +1342,9 @@ fun FileSystemSortDialog(
       )
     ),
     layoutModeSelector = ViewModeSelector(
-      label = "Layout",
-      firstOptionLabel = "List",
-      secondOptionLabel = "Grid",
+      label = stringResource(R.string.sort_dialog_layout),
+      firstOptionLabel = stringResource(R.string.sort_dialog_layout_list),
+      secondOptionLabel = stringResource(R.string.sort_dialog_layout_grid),
       firstOptionIcon = Icons.AutoMirrored.Filled.ViewList,
       secondOptionIcon = Icons.Filled.GridView,
       isFirstOptionSelected = mediaLayoutMode == MediaLayoutMode.LIST,
@@ -1324,59 +1361,59 @@ fun FileSystemSortDialog(
     enableLayoutModeOptions = true, // Enabled for FileSystem/Tree view too!
     contentToggles = listOf(
       ContentToggle(
-        label = "Audio Files",
+        label = stringResource(R.string.sort_dialog_toggle_audio_files),
         checked = showAudioFiles,
         onCheckedChange = { browserPreferences.showAudioFiles.set(it) },
       ),
     ),
     visibilityToggles = listOf(
       VisibilityToggle(
-        label = "Video Thumbnails",
+        label = stringResource(R.string.sort_dialog_toggle_video_thumbnails),
         checked = showVideoThumbnails,
         onCheckedChange = { browserPreferences.showVideoThumbnails.set(it) },
       ),
       VisibilityToggle(
-        label = "Full Name",
+        label = stringResource(R.string.sort_dialog_toggle_full_name),
         checked = unlimitedNameLines,
         onCheckedChange = { appearancePreferences.unlimitedNameLines.set(it) },
       ),
       VisibilityToggle(
-        label = "Path",
+        label = stringResource(R.string.sort_dialog_toggle_path),
         checked = showFolderPath,
         onCheckedChange = { browserPreferences.showFolderPath.set(it) },
       ),
       VisibilityToggle(
-        label = "Total Videos",
+        label = stringResource(R.string.sort_dialog_toggle_total_videos),
         checked = showTotalVideosChip,
         onCheckedChange = { browserPreferences.showTotalVideosChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Folder Size",
+        label = stringResource(R.string.sort_dialog_toggle_folder_size),
         checked = showTotalSizeChip,
         onCheckedChange = { browserPreferences.showTotalSizeChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Size",
+        label = stringResource(R.string.sort_dialog_toggle_size),
         checked = showSizeChip,
         onCheckedChange = { browserPreferences.showSizeChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Resolution",
+        label = stringResource(R.string.sort_dialog_toggle_resolution),
         checked = showResolutionChip,
         onCheckedChange = { browserPreferences.showResolutionChip.set(it) },
       ),
       VisibilityToggle(
-        label = "Framerate",
+        label = stringResource(R.string.sort_dialog_toggle_framerate),
         checked = showFramerateInResolution,
         onCheckedChange = { browserPreferences.showFramerateInResolution.set(it) },
       ),
       VisibilityToggle(
-        label = "Subtitle",
+        label = stringResource(R.string.sort_dialog_toggle_subtitle),
         checked = showSubtitleIndicator,
         onCheckedChange = { browserPreferences.showSubtitleIndicator.set(it) },
       ),
       VisibilityToggle(
-        label = "Progress Bar",
+        label = stringResource(R.string.sort_dialog_toggle_progress_bar),
         checked = showProgressBar,
         onCheckedChange = { browserPreferences.showProgressBar.set(it) },
       ),

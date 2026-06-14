@@ -31,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.AdvancedPreferences
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.presentation.Screen
@@ -77,10 +79,12 @@ data class ConfigEditorScreen(
       ConfigType.MPV_CONF   -> "mpv.conf"   to preferences.mpvConf.get()
       ConfigType.INPUT_CONF -> "input.conf" to preferences.inputConf.get()
     }
-    val screenTitle = when (configType) {
-      ConfigType.MPV_CONF   -> "Edit mpv.conf"
-      ConfigType.INPUT_CONF -> "Edit input.conf"
-    }
+    val screenTitle = stringResource(
+      when (configType) {
+        ConfigType.MPV_CONF -> R.string.pref_advanced_mpv_conf
+        ConfigType.INPUT_CONF -> R.string.pref_advanced_input_conf
+      }
+    )
 
     var configText       by remember { mutableStateOf(initialValue) }
     var hasUnsavedChanges by remember { mutableStateOf(false) }
@@ -117,7 +121,7 @@ data class ConfigEditorScreen(
             val tree = DocumentFile.fromTreeUri(context, mpvConfStorageLocation.toUri())
             if (tree == null) {
               withContext(Dispatchers.Main) {
-                Toast.makeText(context, "No storage location set", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.lua_no_storage_location), Toast.LENGTH_LONG).show()
               }
               return@launch
             }
@@ -125,7 +129,7 @@ data class ConfigEditorScreen(
             val confFile = existing ?: tree.createFile("text/plain", fileName)?.also { it.renameTo(fileName) }
             val uri = confFile?.uri ?: run {
               withContext(Dispatchers.Main) {
-                Toast.makeText(context, "Failed to create file", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, context.getString(R.string.lua_create_file_failed), Toast.LENGTH_LONG).show()
               }
               return@launch
             }
@@ -142,7 +146,7 @@ data class ConfigEditorScreen(
           }
         } catch (e: Exception) {
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Failed to save: ${e.message}", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.lua_save_failed, e.message), Toast.LENGTH_LONG).show()
           }
         }
       }
@@ -163,7 +167,7 @@ data class ConfigEditorScreen(
             )
             if (hasUnsavedChanges) {
               Text(
-                text  = "Unsaved changes",
+                text  = stringResource(R.string.editor_unsaved_changes),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.secondary,
               )
@@ -174,7 +178,7 @@ data class ConfigEditorScreen(
           IconButton(onClick = backStack::removeLastOrNull) {
             Icon(
               Icons.AutoMirrored.Default.ArrowBack,
-              contentDescription = "Back",
+              contentDescription = stringResource(R.string.back),
               tint = MaterialTheme.colorScheme.secondary,
             )
           }
@@ -194,7 +198,7 @@ data class ConfigEditorScreen(
             ),
             shape = RoundedCornerShape(8.dp),
           ) {
-            Icon(Icons.Default.Check, contentDescription = "Save")
+            Icon(Icons.Default.Check, contentDescription = stringResource(R.string.generic_save))
           }
         },
       )

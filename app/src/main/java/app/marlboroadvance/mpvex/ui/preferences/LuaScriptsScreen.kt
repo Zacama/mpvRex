@@ -37,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -46,6 +47,7 @@ import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import android.content.Intent
 import java.io.File
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.AdvancedPreferences
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.presentation.Screen
@@ -134,7 +136,7 @@ object LuaScriptsScreen : Screen {
     
     fun shareScript(scriptName: String) {
       if (mpvConfStorageLocation.isBlank()) {
-        Toast.makeText(context, "No storage location configured", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.lua_no_storage_location), Toast.LENGTH_SHORT).show()
         return
       }
       
@@ -171,13 +173,13 @@ object LuaScriptsScreen : Screen {
               addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             
-            context.startActivity(Intent.createChooser(shareIntent, "Share script"))
+            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_script)))
           } else {
-            Toast.makeText(context, "Script file not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.lua_script_not_found), Toast.LENGTH_SHORT).show()
           }
         }
       }.onFailure { e ->
-        Toast.makeText(context, "Error sharing script: ${e.message}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.lua_share_error, e.message), Toast.LENGTH_LONG).show()
       }
     }
     
@@ -186,7 +188,7 @@ object LuaScriptsScreen : Screen {
         TopAppBar(
           title = {
             Text(
-              text = "Lua Scripts",
+              text = stringResource(R.string.lua_scripts_title),
               style = MaterialTheme.typography.headlineSmall,
               fontWeight = FontWeight.ExtraBold,
               color = MaterialTheme.colorScheme.primary,
@@ -196,7 +198,7 @@ object LuaScriptsScreen : Screen {
             IconButton(onClick = backStack::removeLastOrNull) {
               Icon(
                 Icons.AutoMirrored.Default.ArrowBack,
-                contentDescription = "Back",
+                contentDescription = stringResource(R.string.back),
                 tint = MaterialTheme.colorScheme.secondary,
               )
             }
@@ -212,7 +214,7 @@ object LuaScriptsScreen : Screen {
         ) {
           Icon(
             Icons.Default.Add,
-            contentDescription = "Create new script",
+            contentDescription = stringResource(R.string.lua_create_new_script),
             tint = MaterialTheme.colorScheme.onPrimary,
           )
         }
@@ -260,7 +262,7 @@ object LuaScriptsScreen : Screen {
                 ) {
                   Icon(
                     Icons.Default.Share,
-                    contentDescription = "Share",
+                    contentDescription = stringResource(R.string.generic_share),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                   )
                 }
@@ -271,7 +273,7 @@ object LuaScriptsScreen : Screen {
                 ) {
                   Icon(
                     Icons.Default.Edit,
-                    contentDescription = "Edit",
+                    contentDescription = stringResource(R.string.generic_edit),
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                   )
                 }

@@ -67,12 +67,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.PlayerButton
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.ui.player.Panels
@@ -240,7 +242,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = chapter?.name ?: "Chapters",
+                text = chapter?.name ?: stringResource(R.string.player_chapters_title),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -299,7 +301,7 @@ fun RenderPlayerButton(
           ) {
             Icon(
               imageVector = Icons.Default.Speed,
-              contentDescription = "Playback Speed",
+              contentDescription = stringResource(R.string.playback_speed),
               tint = if (isSpeedNonOne) activeContentColor else contentColor,
               modifier = Modifier.size(24.dp),
             )
@@ -389,7 +391,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Rotation",
+                text = stringResource(R.string.control_rotation),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -431,7 +433,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Frame Nav",
+                text = stringResource(R.string.control_frame_nav),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -474,7 +476,7 @@ fun RenderPlayerButton(
                     Box(contentAlignment = Alignment.Center) {
                       Icon(
                         imageVector = Icons.Default.FastRewind,
-                        contentDescription = "Previous Frame",
+                        contentDescription = stringResource(R.string.frame_previous),
                         tint = contentColor,
                         modifier = Modifier.size(24.dp),
                       )
@@ -517,7 +519,7 @@ fun RenderPlayerButton(
                       Box(contentAlignment = Alignment.Center) {
                         Icon(
                           imageVector = Icons.Default.CameraAlt,
-                          contentDescription = "Take Screenshot",
+                          contentDescription = stringResource(R.string.take_screenshot),
                           tint = contentColor,
                           modifier = Modifier.size(24.dp),
                         )
@@ -540,7 +542,7 @@ fun RenderPlayerButton(
                     Box(contentAlignment = Alignment.Center) {
                       Icon(
                         imageVector = Icons.Default.FastForward,
-                        contentDescription = "Next Frame",
+                        contentDescription = stringResource(R.string.frame_next),
                         tint = contentColor,
                         modifier = Modifier.size(24.dp),
                       )
@@ -598,7 +600,7 @@ fun RenderPlayerButton(
           ) {
             Icon(
               imageVector = Icons.Default.ZoomIn,
-              contentDescription = "Video Zoom",
+              contentDescription = stringResource(R.string.video_zoom),
               tint = if (isZoomed) activeContentColor else contentColor,
               modifier = Modifier.size(24.dp),
             )
@@ -645,7 +647,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "PiP",
+                text = stringResource(R.string.control_pip),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -743,7 +745,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Lock",
+                text = stringResource(R.string.control_lock),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -781,7 +783,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Audio",
+                text = stringResource(R.string.pref_audio),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -820,7 +822,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Subtitles",
+                text = stringResource(R.string.pref_subtitles),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -899,9 +901,9 @@ fun RenderPlayerButton(
               )
               Text(
                 text = when (repeatMode) {
-                    app.marlboroadvance.mpvex.ui.player.RepeatMode.OFF -> "Repeat Off"
-                    app.marlboroadvance.mpvex.ui.player.RepeatMode.ONE -> "Repeat One"
-                    app.marlboroadvance.mpvex.ui.player.RepeatMode.ALL -> "Repeat All"
+                    app.marlboroadvance.mpvex.ui.player.RepeatMode.OFF -> stringResource(R.string.control_repeat_off)
+                    app.marlboroadvance.mpvex.ui.player.RepeatMode.ONE -> stringResource(R.string.control_repeat_one)
+                    app.marlboroadvance.mpvex.ui.player.RepeatMode.ALL -> stringResource(R.string.control_repeat_all)
                 },
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
@@ -952,7 +954,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Skip ${customSkipDuration}s",
+                text = stringResource(R.string.control_skip_fmt, customSkipDuration),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -998,7 +1000,7 @@ fun RenderPlayerButton(
                   modifier = Modifier.size(24.dp)
                 )
                 Text(
-                  text = if (shuffleEnabled) "Shuffle On" else "Shuffle Off",
+                  text = if (shuffleEnabled) stringResource(R.string.control_shuffle_on) else stringResource(R.string.control_shuffle_off),
                   style = MaterialTheme.typography.bodyMedium,
                   maxLines = 1,
                 )
@@ -1039,7 +1041,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = if (isMirrored) "Mirrored" else "Mirror",
+                text = if (isMirrored) stringResource(R.string.control_mirrored) else stringResource(R.string.control_mirror),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -1079,7 +1081,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp).rotate(90f)
               )
               Text(
-                text = if (isVerticalFlipped) "Flipped" else "Flip Vert",
+                text = if (isVerticalFlipped) stringResource(R.string.control_flipped) else stringResource(R.string.control_flip_vert),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -1099,7 +1101,7 @@ fun RenderPlayerButton(
             Box(contentAlignment = Alignment.Center) {
               Icon(
                 imageVector = Icons.Default.Flip,
-                contentDescription = "Vertical Flip",
+                contentDescription = stringResource(R.string.control_vertical_flip),
                 tint = if (isVerticalFlipped) activeContentColor else contentColor,
                 modifier = Modifier
                   .padding(MaterialTheme.spacing.smaller)
@@ -1137,12 +1139,12 @@ fun RenderPlayerButton(
               modifier = Modifier.padding(horizontal = MaterialTheme.spacing.smaller)
             ) {
               Text(
-                text = "AB",
+                text = stringResource(R.string.control_ab),
                 style = MaterialTheme.typography.labelLarge,
                 fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
               )
               Text(
-                text = "Loop",
+                text = stringResource(R.string.control_loop),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -1160,7 +1162,7 @@ fun RenderPlayerButton(
         ) {
           Box(contentAlignment = Alignment.Center) {
             Text(
-              text = "AB",
+              text = stringResource(R.string.control_ab),
               style = MaterialTheme.typography.labelLarge,
               fontWeight = androidx.compose.ui.text.font.FontWeight.Bold,
               color = if (isActive) activeContentColor else contentColor,
@@ -1202,7 +1204,7 @@ fun RenderPlayerButton(
                 modifier = Modifier.size(24.dp)
               )
               Text(
-                text = "Background",
+                text = stringResource(R.string.control_background),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
               )
@@ -1243,7 +1245,7 @@ fun RenderPlayerButton(
                   modifier = Modifier.size(24.dp)
                 )
                 Text(
-                  text = "Ambient",
+                  text = stringResource(R.string.control_ambient),
                   style = MaterialTheme.typography.bodyMedium,
                   maxLines = 1,
                 )
@@ -1271,7 +1273,7 @@ fun RenderPlayerButton(
               Box(contentAlignment = Alignment.Center) {
                 Icon(
                   imageVector = if (isAmbientEnabled) Icons.Filled.BlurOn else Icons.Outlined.BlurOn,
-                  contentDescription = "Ambience Mode",
+                  contentDescription = stringResource(R.string.control_ambience_mode),
                   tint = if (isAmbientEnabled) activeContentColor else contentColor,
                   modifier = Modifier.size(24.dp)
                 )

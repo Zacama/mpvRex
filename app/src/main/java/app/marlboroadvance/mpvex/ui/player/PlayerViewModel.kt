@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import app.marlboroadvance.mpvex.R
+import app.marlboroadvance.mpvex.utils.withAppLocale
 import app.marlboroadvance.mpvex.preferences.AudioPreferences
 import app.marlboroadvance.mpvex.preferences.GesturePreferences
 import app.marlboroadvance.mpvex.preferences.PlayerPreferences
@@ -354,6 +355,7 @@ class PlayerViewModel(
   // ==================== Ambience Mode ======================================
   // Ambient mode manager handles all ambient mode functionality
   private val ambientModeManager = AmbientModeManager(
+    context = appContext,
     playerPreferences = playerPreferences,
     cacheDir = host.context.cacheDir,
     scope = viewModelScope,
@@ -521,16 +523,16 @@ class PlayerViewModel(
         val path =
           uri.resolveUri(host.context)
             ?: return@launch withContext(Dispatchers.Main) {
-              showToast("Failed to load audio file: Invalid URI")
+              showToast(appContext.withAppLocale().getString(R.string.failed_load_audio_invalid_uri))
             }
 
         MPVLib.command("audio-add", path, "cached")
         withContext(Dispatchers.Main) {
-          showToast("Audio track added")
+          showToast(appContext.withAppLocale().getString(R.string.audio_track_added))
         }
       }.onFailure { e ->
         withContext(Dispatchers.Main) {
-          showToast("Failed to load audio: ${e.message}")
+          showToast(appContext.withAppLocale().getString(R.string.failed_load_audio, e.message))
         }
         android.util.Log.e("PlayerViewModel", "Error adding audio", e)
       }
@@ -1319,7 +1321,7 @@ class PlayerViewModel(
         // Check if file was created
         if (!tempFile.exists() || tempFile.length() == 0L) {
           withContext(Dispatchers.Main) {
-            Toast.makeText(context, "Failed to create screenshot", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.screenshot_failed), Toast.LENGTH_SHORT).show()
           }
           return@launch
         }
@@ -1412,7 +1414,7 @@ class PlayerViewModel(
         }
       } catch (e: Exception) {
         withContext(Dispatchers.Main) {
-          Toast.makeText(context, "Failed to save snapshot: ${e.message}", Toast.LENGTH_LONG).show()
+          Toast.makeText(context, context.getString(R.string.snapshot_save_failed, e.message), Toast.LENGTH_LONG).show()
         }
       } finally {
         _isSnapshotLoading.value = false

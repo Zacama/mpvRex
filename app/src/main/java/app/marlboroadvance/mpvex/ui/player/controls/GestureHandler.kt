@@ -40,6 +40,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -53,6 +54,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import `is`.xyz.mpv.MPVLib
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.AudioPreferences
 import app.marlboroadvance.mpvex.preferences.GesturePreferences
 import app.marlboroadvance.mpvex.preferences.PlayerPreferences
@@ -82,6 +84,7 @@ fun GestureHandler(
   modifier: Modifier = Modifier,
 ) {
   val playerPreferences = koinInject<PlayerPreferences>()
+  val subPositionFmt = stringResource(R.string.sub_position_fmt)
   val audioPreferences = koinInject<AudioPreferences>()
   val gesturePreferences = koinInject<GesturePreferences>()
   val subtitlesPreferences = koinInject<SubtitlesPreferences>()
@@ -609,7 +612,7 @@ fun GestureHandler(
                       if (newSubPos != lastSubPosValue) {
                         MPVLib.setPropertyInt("sub-pos", newSubPos)
                         lastSubPosValue = newSubPos
-                        viewModel.playerUpdate.update { PlayerUpdates.ShowText("Sub position: $newSubPos") }
+                        viewModel.playerUpdate.update { PlayerUpdates.ShowText(subPositionFmt.format(newSubPos)) }
                       }
                       change.consume()
                     }

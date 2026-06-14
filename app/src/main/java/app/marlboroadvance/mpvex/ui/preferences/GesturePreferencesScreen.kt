@@ -123,7 +123,7 @@ object GesturePreferencesScreen : Screen {
             summary = {
               Text(
                 text = if (isCustomValue) {
-                  "Custom (${doubleTapSeekDuration}s)"
+                  stringResource(R.string.pref_gesture_custom_seconds, doubleTapSeekDuration)
                 } else {
                   "${doubleTapSeekDuration}s"
                 },
@@ -141,13 +141,13 @@ object GesturePreferencesScreen : Screen {
               text = {
                 Column {
                   Text(
-                    text = "Enter custom seek duration in seconds (1-120)",
+                    text = stringResource(R.string.pref_gesture_custom_seek_hint),
                     modifier = Modifier.padding(bottom = 8.dp),
                   )
                   OutlinedTextField(
                     value = customSeekValue,
                     onValueChange = { customSeekValue = it },
-                    label = { Text("Seconds") },
+                    label = { Text(stringResource(R.string.seconds)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
@@ -183,10 +183,10 @@ object GesturePreferencesScreen : Screen {
             onValueChange = { preferences.doubleTapSeekAreaWidth.set(it) },
             values = seekAreaValues,
             valueToText = { AnnotatedString("${it}%") },
-            title = { Text(text = "Double Tap Seek Area Width") },
+            title = { Text(text = stringResource(R.string.pref_double_tap_seek_area_width_title)) },
             summary = {
               Text(
-                text = "Current: ${doubleTapSeekAreaWidth}%",
+                text = stringResource(R.string.pref_double_tap_seek_area_width_summary, doubleTapSeekAreaWidth),
                 color = MaterialTheme.colorScheme.outline,
               )
             },

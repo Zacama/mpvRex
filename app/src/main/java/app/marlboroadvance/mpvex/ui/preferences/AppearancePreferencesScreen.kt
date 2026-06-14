@@ -52,6 +52,10 @@ import kotlin.math.roundToInt
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.text.AnnotatedString
+import androidx.core.os.LocaleListCompat
+import me.zhanghai.compose.preference.ListPreference
 import androidx.compose.runtime.rememberCoroutineScope
 import app.marlboroadvance.mpvex.domain.thumbnail.ThumbnailRepository
 import kotlinx.coroutines.Dispatchers
@@ -95,13 +99,13 @@ object AppearancePreferencesScreen : Screen {
                     .onSuccess {
                         withContext(Dispatchers.Main) {
                             onSuccess()
-                            Toast.makeText(context, "Local thumbnail cache cleared", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.pref_appearance_thumb_cache_cleared), Toast.LENGTH_SHORT).show()
                         }
                     }
                     .onFailure {
                         withContext(Dispatchers.Main) {
                             onFailure()
-                            Toast.makeText(context, "Failed to clear cache", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.pref_appearance_thumb_cache_clear_failed), Toast.LENGTH_SHORT).show()
                         }
                     }
             }
@@ -137,6 +141,44 @@ object AppearancePreferencesScreen : Screen {
                         .fillMaxSize()
                         .padding(padding),
                 ) {
+                    item {
+                        PreferenceSectionHeader(title = stringResource(id = R.string.pref_appearance_category_language))
+                    }
+
+                    item {
+                        PreferenceCard {
+                            var currentLanguage by remember {
+                                mutableStateOf(
+                                    AppLanguage.fromTag(AppCompatDelegate.getApplicationLocales().toLanguageTags()),
+                                )
+                            }
+                            val systemDefaultLabel = stringResource(R.string.pref_appearance_language_system)
+
+                            ListPreference(
+                                value = currentLanguage,
+                                onValueChange = { language ->
+                                    currentLanguage = language
+                                    AppCompatDelegate.setApplicationLocales(
+                                        if (language.tag.isEmpty()) {
+                                            LocaleListCompat.getEmptyLocaleList()
+                                        } else {
+                                            LocaleListCompat.forLanguageTags(language.tag)
+                                        },
+                                    )
+                                },
+                                values = AppLanguage.entries,
+                                valueToText = { AnnotatedString(it.nativeName ?: systemDefaultLabel) },
+                                title = { Text(stringResource(R.string.pref_appearance_language_title)) },
+                                summary = {
+                                    Text(
+                                        text = currentLanguage.nativeName ?: systemDefaultLabel,
+                                        color = MaterialTheme.colorScheme.outline,
+                                    )
+                                },
+                            )
+                        }
+                    }
+
                     item {
                         PreferenceSectionHeader(title = stringResource(id = R.string.pref_appearance_category_theme))
                     }
@@ -552,11 +594,11 @@ object AppearancePreferencesScreen : Screen {
                             if (showNetworkWarning) {
                                 AlertDialog(
                                     onDismissRequest = { showNetworkWarning = false },
-                                    title = { Text("Enable Network Thumbnails?") },
+                                    title = { Text(stringResource(R.string.pref_appearance_network_thumbs_confirm_title)) },
                                     text = {
                                         Column{
                                             Text(
-                                                text = "Generating thumbnails for network streams (M3U/HTTP) may significantly increase background data usage and loading times. Proceed?",
+                                                text = stringResource(R.string.pref_appearance_network_thumbs_confirm_text),
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
@@ -622,7 +664,7 @@ object AppearancePreferencesScreen : Screen {
                             pendingStrategyChange?.let { newStrategy ->
                                 AlertDialog(
                                     onDismissRequest = { pendingStrategyChange = null },
-                                    title = { Text("Change Thumbnail Strategy?") },
+                                    title = { Text(stringResource(R.string.pref_appearance_thumb_strategy_confirm_title)) },
                                     text = {
                                         Column {
                                             val summaryText = if (newStrategy == ThumbnailStrategy.FirstFrame) {
@@ -637,7 +679,7 @@ object AppearancePreferencesScreen : Screen {
                                             )
                                             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
                                             Text(
-                                                text = "Changing the extraction strategy will clear your currently saved thumbnail cache. New thumbnails will be generated automatically as you browse.",
+                                                text = stringResource(R.string.pref_appearance_thumb_clear_cache_notice),
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
@@ -740,17 +782,17 @@ object AppearancePreferencesScreen : Screen {
                                         pendingPositionChange = null 
                                         draftPosition = thumbnailPositionPercent.toFloat()
                                     },
-                                    title = { Text("Update Thumbnail Position?") },
+                                    title = { Text(stringResource(R.string.pref_appearance_thumb_position_confirm_title)) },
                                     text = {
                                         Column {
                                             Text(
-                                                text = "Reset thumbnail at $newPosition% of the video duration.",
+                                                text = stringResource(R.string.pref_appearance_thumb_position_confirm_value, newPosition),
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
                                             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
                                             Text(
-                                                text = "Changing the extraction position will clear your currently saved thumbnail cache. New thumbnails will be generated automatically as you browse.",
+                                                text = stringResource(R.string.pref_appearance_thumb_clear_cache_notice),
                                                 style = MaterialTheme.typography.bodyMedium,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                                             )
@@ -789,4 +831,38 @@ object AppearancePreferencesScreen : Screen {
             }
         }
     }
+}
+
+/**
+ * Languages the app UI can be displayed in. [tag] is a BCP-47 language tag
+ * matching a values-* resource folder; an empty tag means "follow system".
+ * [nativeName] is intentionally written in its own language and never translated.
+ *
+ * This list is not derived from the resource folders: when adding a new
+ * values-* translation, add an entry here too (see docs/i18n.md,
+ * "Adding a new language").
+ */
+enum class AppLanguage(val tag: String, val nativeName: String?) {
+  System("", null),
+  English("en-US", "English"),
+  Spanish("es", "Español"),
+  SimplifiedChinese("zh-CN", "简体中文"),
+  TraditionalChinese("zh-TW", "繁體中文"),
+  ;
+
+  companion object {
+    fun fromTag(tag: String): AppLanguage {
+      if (tag.isEmpty()) return System
+      val lower = tag.lowercase()
+      return when {
+        lower.startsWith("en") -> English
+        lower.startsWith("es") -> Spanish
+        lower.startsWith("zh") &&
+          (lower.contains("hant") || lower.contains("tw") || lower.contains("hk") || lower.contains("mo")) ->
+          TraditionalChinese
+        lower.startsWith("zh") -> SimplifiedChinese
+        else -> System
+      }
+    }
+  }
 }

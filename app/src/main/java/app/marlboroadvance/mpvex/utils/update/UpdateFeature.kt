@@ -23,10 +23,12 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.utils.media.MediaFormatter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.jeziellago.compose.markdowntext.MarkdownText
 import androidx.core.content.FileProvider
@@ -399,7 +401,7 @@ fun UpdateDialog(
     release: Release,
     isDownloading: Boolean,
     progress: Float,
-    actionLabel: String,
+    isInstall: Boolean,
     currentVersion: String,
     onDismiss: () -> Unit,
     onAction: () -> Unit,
@@ -412,7 +414,7 @@ fun UpdateDialog(
         onDismissRequest = onDismiss,
         icon = {
             Icon(
-                imageVector = if (actionLabel == "Install") Icons.Filled.SystemUpdate else Icons.Filled.CloudDownload,
+                imageVector = if (isInstall) Icons.Filled.SystemUpdate else Icons.Filled.CloudDownload,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp)
             )
@@ -420,7 +422,11 @@ fun UpdateDialog(
         title = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    text = if (actionLabel == "Install") "Ready to Install" else "Update Available",
+                    text = if (isInstall) {
+                        stringResource(R.string.update_ready_to_install)
+                    } else {
+                        stringResource(R.string.update_available)
+                    },
                     style = MaterialTheme.typography.titleLarge
                 )
                 Spacer(modifier = Modifier.height(4.dp))
@@ -437,16 +443,16 @@ fun UpdateDialog(
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
             ) {
-                if (actionLabel != "Install") {
+                if (!isInstall) {
                     // Show version info for update available state
-                    InfoRow(label = "Current Version", value = currentVersion)
-                    InfoRow(label = "Latest Version", value = release.tagName.removePrefix("v"))
-                    InfoRow(label = "Release Date", value = formattedDate)
-                    InfoRow(label = "Size", value = MediaFormatter.formatFileSize(downloadSize))
+                    InfoRow(label = stringResource(R.string.update_current_version), value = currentVersion)
+                    InfoRow(label = stringResource(R.string.update_latest_version), value = release.tagName.removePrefix("v"))
+                    InfoRow(label = stringResource(R.string.update_release_date), value = formattedDate)
+                    InfoRow(label = stringResource(R.string.update_size), value = MediaFormatter.formatFileSize(downloadSize))
 
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Release Notes",
+                        text = stringResource(R.string.update_release_notes),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -464,7 +470,7 @@ fun UpdateDialog(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text(text = "Downloading...", style = MaterialTheme.typography.bodySmall)
+                        Text(text = stringResource(R.string.update_downloading), style = MaterialTheme.typography.bodySmall)
                         Text(text = "${progress.toInt()}%", style = MaterialTheme.typography.bodySmall)
                     }
                     Spacer(modifier = Modifier.height(8.dp))
@@ -480,20 +486,20 @@ fun UpdateDialog(
         confirmButton = {
             if (!isDownloading) {
                 Button(onClick = onAction) {
-                    Text(if (actionLabel == "Install") "Install" else "Download")
+                    Text(if (isInstall) stringResource(R.string.install) else stringResource(R.string.download))
                 }
             }
         },
         dismissButton = {
             if (!isDownloading) {
                 Row {
-                    if (actionLabel != "Install") {
+                    if (!isInstall) {
                         TextButton(onClick = onIgnore) {
-                            Text("Ignore")
+                            Text(stringResource(R.string.ignore))
                         }
                     }
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel")
+                        Text(stringResource(R.string.generic_cancel))
                     }
                 }
             }

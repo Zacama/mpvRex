@@ -22,6 +22,7 @@ import androidx.core.app.ServiceCompat
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.session.MediaButtonReceiver
 import app.marlboroadvance.mpvex.R
+import app.marlboroadvance.mpvex.utils.withAppLocale
 import `is`.xyz.mpv.MPVLib
 import `is`.xyz.mpv.MPVNode
 import app.marlboroadvance.mpvex.preferences.PlayerPreferences
@@ -50,13 +51,15 @@ class MediaPlaybackService :
     private var isServiceRunning = false
 
     fun createNotificationChannel(context: Context) {
+      // The channel name is fixed at first creation; Android does not re-read it
+      // when the app language changes later (platform limitation).
       val channel =
         NotificationChannel(
           NOTIFICATION_CHANNEL_ID,
-          context.getString(R.string.notification_channel_name),
+          context.withAppLocale().getString(R.string.notification_channel_name),
           NotificationManager.IMPORTANCE_LOW,
         ).apply {
-          description = context.getString(R.string.notification_channel_description)
+          description = context.withAppLocale().getString(R.string.notification_channel_description)
           setShowBadge(false)
           enableLights(false)
           enableVibration(false)
@@ -373,7 +376,7 @@ class MediaPlaybackService :
     return NotificationCompat
       .Builder(this, NOTIFICATION_CHANNEL_ID)
       .setContentTitle(mediaTitle.ifBlank { "Unknown Video" })
-      .setContentText(mediaArtist.ifBlank { getString(R.string.notification_playing) })
+      .setContentText(mediaArtist.ifBlank { withAppLocale().getString(R.string.notification_playing) })
       .setSmallIcon(R.drawable.ic_launcher_foreground)
       .setLargeIcon(thumbnail)
       .setContentIntent(pendingIntent)

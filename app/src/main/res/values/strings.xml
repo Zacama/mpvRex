@@ -13,6 +13,9 @@
     <string name="pref_preferences">Preferences</string>
 
     <string name="pref_appearance_title">Appearance</string>
+    <string name="pref_appearance_category_language">Language</string>
+    <string name="pref_appearance_language_title">App language</string>
+    <string name="pref_appearance_language_system">System default</string>
     <string name="pref_appearance_category_bottom_nav">Bottom Navigation Tabs</string>
     <string name="pref_appearance_tab_home_title">Home / Files</string>
     <string name="pref_appearance_tab_home_summary">Show local folders &amp; file explorer</string>
@@ -581,8 +584,6 @@
     <string name="invalid_subtitle_format">Invalid subtitle file format</string>
     <string name="subtitle_added">%s added</string>
     <string name="failed_load_subtitle">Failed to load subtitle</string>
-    <string name="remove_from_playlist">Remove %1$d %2$s from playlist?</string>
-    <string name="remove_playlist_items_confirm">The selected %2$s will be removed from this playlist. Original %3$s will not be deleted.</string>
     <string name="search_videos">Search videos…</string>
     <string name="search_folders_and_videos">Search folders and videos…</string>
     <string name="search_playlists">Search playlists…</string>
@@ -628,6 +629,20 @@
     <string name="recents">Recents</string>
     <string name="playlists">Playlists</string>
     <string name="network">Network</string>
+    <string name="tab_shorts_short">Shorts</string>
+    <string name="folders_empty_state_title">No video folders found</string>
+    <string name="folders_empty_state_message">Add videos to your device to see folders here</string>
+    <string name="recents_empty_state_title">No recently played items</string>
+    <string name="recents_empty_state_message">Your recently played videos and playlists will appear here</string>
+    <string name="playlist_empty_state_message">Create a playlist to see it listed here</string>
+    <string name="playlist_detail_empty_title">No videos in this playlist</string>
+    <string name="playlist_detail_empty_message">Add videos from the browser to build your playlist</string>
+    <string name="filesystem_empty_title">Empty folder</string>
+    <string name="filesystem_empty_message">This folder contains no videos or subfolders</string>
+    <string name="playlist_local">Local</string>
+    <string name="playlist_created_success">Playlist created successfully</string>
+    <string name="playlist_create_failed">Failed to create playlist: %1$s</string>
+    <string name="file_picker_system_picker">System Picker</string>
     <string name="seconds">Seconds</string>
     <string name="milliseconds">Milliseconds</string>
     <string name="name">Name</string>
@@ -658,4 +673,623 @@
     <string name="copy_video_path">Copy video file path</string>
     <string name="copy_folder_path">Copy folder path</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
+
+    <!-- Sort & View dialog -->
+    <string name="sort_dialog_title_sort_view">Sort &amp; View Options</string>
+    <string name="sort_dialog_title_view">View Options</string>
+    <string name="sort_dialog_sort_by">Sort by</string>
+    <string name="sort_dialog_toggle_sort_order">Toggle Sort Order</string>
+    <string name="sort_dialog_filters">Filters</string>
+    <string name="sort_dialog_fields">Fields</string>
+    <string name="sort_dialog_collapse">Collapse</string>
+    <string name="sort_dialog_expand">Expand</string>
+    <string name="sort_dialog_grid_columns">Grid Columns</string>
+    <string name="sort_dialog_folder_grid">Folder Grid</string>
+    <string name="sort_dialog_video_grid">Video Grid</string>
+    <string name="sort_dialog_columns_count">%1$d columns</string>
+    <string name="sort_dialog_grid_columns_fmt">Grid Columns (%1$s)</string>
+    <string name="sort_dialog_folder_grid_columns_fmt">Folder Grid Columns (%1$s)</string>
+    <string name="sort_dialog_video_grid_columns_fmt">Video Grid Columns (%1$s)</string>
+    <string name="generic_landscape">Landscape</string>
+    <string name="generic_portrait">Portrait</string>
+    <string name="sort_dialog_view_mode">View Mode</string>
+    <string name="sort_dialog_view_mode_folder">Folder</string>
+    <string name="sort_dialog_view_mode_tree">Tree</string>
+    <string name="sort_dialog_view_mode_library">Library</string>
+    <string name="sort_dialog_layout">Layout</string>
+    <string name="sort_dialog_layout_list">List</string>
+    <string name="sort_dialog_layout_grid">Grid</string>
+    <string name="sort_dialog_toggle_audio_files">Audio Files</string>
+    <string name="sort_dialog_toggle_thumbnails">Thumbnails</string>
+    <string name="sort_dialog_toggle_video_thumbnails">Video Thumbnails</string>
+    <string name="sort_dialog_toggle_full_name">Full Name</string>
+    <string name="sort_dialog_toggle_path">Path</string>
+    <string name="sort_dialog_toggle_total_videos">Total Videos</string>
+    <string name="sort_dialog_toggle_total_duration">Total Duration</string>
+    <string name="sort_dialog_toggle_folder_size">Folder Size</string>
+    <string name="sort_dialog_toggle_date">Date</string>
+    <string name="sort_dialog_toggle_progress_bar">Progress Bar</string>
+    <string name="sort_dialog_toggle_subtitle_indicator">Subtitle Indicator</string>
+    <string name="sort_dialog_toggle_subtitle">Subtitle</string>
+    <string name="sort_dialog_toggle_size">Size</string>
+    <string name="sort_dialog_toggle_resolution">Resolution</string>
+    <string name="sort_dialog_toggle_framerate">Framerate</string>
+
+    <!-- Sort types -->
+    <string name="sort_type_title">Title</string>
+    <string name="sort_type_duration">Duration</string>
+    <string name="sort_type_date">Date</string>
+    <string name="sort_type_size">Size</string>
+    <string name="sort_type_count">Count</string>
+
+    <!-- Generic additions -->
+    <string name="generic_save">Save</string>
+    <string name="generic_loading">Loading…</string>
+    <string name="generic_unknown_error">Unknown error</string>
+
+    <!-- Add to playlist dialog -->
+    <string name="playlist_add_to">Add to Playlist</string>
+    <string name="playlist_existing">Existing Playlists</string>
+    <string name="playlist_none_yet">No playlists yet</string>
+    <string name="playlist_create_first">Create your first playlist above</string>
+    <plurals name="playlist_adding_videos">
+        <item quantity="one">Adding %1$d video to playlist</item>
+        <item quantity="other">Adding %1$d videos to playlist</item>
+    </plurals>
+    <plurals name="playlist_videos_added_to">
+        <item quantity="one">Video added to \"%2$s\"</item>
+        <item quantity="other">%1$d videos added to \"%2$s\"</item>
+    </plurals>
+    <plurals name="playlist_video_count_date">
+        <item quantity="one">%1$d video • %2$s</item>
+        <item quantity="other">%1$d videos • %2$s</item>
+    </plurals>
+
+    <!-- File operation progress dialog -->
+    <string name="file_op_copying_files">Copying files</string>
+    <string name="file_op_moving_files">Moving files</string>
+    <string name="file_op_completed">Operation completed successfully!</string>
+    <string name="file_op_cancelled">Operation cancelled</string>
+    <string name="file_op_file_of">File %1$d of %2$d</string>
+    <string name="file_op_current_file">Current file</string>
+    <string name="file_op_overall_progress">Overall progress</string>
+    <string name="file_op_bytes_of">%1$s of %2$s</string>
+    <string name="file_op_files_processed">Files processed</string>
+    <string name="file_op_total_size">Total size</string>
+
+    <!-- Rename dialog -->
+    <string name="rename_dialog_title">Rename %1$s</string>
+    <string name="rename_error_empty">Name cannot be empty</string>
+    <string name="rename_error_invalid">Name cannot contain / or \\</string>
+    <string name="item_type_video">video</string>
+    <string name="item_type_folder">folder</string>
+    <string name="item_type_file">file</string>
+
+    <!-- Delete confirmation dialog -->
+    <plurals name="delete_title_video">
+        <item quantity="one">Delete %1$d video?</item>
+        <item quantity="other">Delete %1$d videos?</item>
+    </plurals>
+    <plurals name="delete_title_folder">
+        <item quantity="one">Delete %1$d folder?</item>
+        <item quantity="other">Delete %1$d folders?</item>
+    </plurals>
+    <plurals name="delete_title_playlist">
+        <item quantity="one">Delete %1$d playlist?</item>
+        <item quantity="other">Delete %1$d playlists?</item>
+    </plurals>
+    <plurals name="delete_title_item">
+        <item quantity="one">Delete %1$d item?</item>
+        <item quantity="other">Delete %1$d items?</item>
+    </plurals>
+    <plurals name="delete_confirm_message">
+        <item quantity="one">This action cannot be undone. The selected item will be permanently deleted.</item>
+        <item quantity="other">This action cannot be undone. The selected items will be permanently deleted.</item>
+    </plurals>
+
+    <!-- Network connection dialogs -->
+    <string name="edit_connection">Edit Connection</string>
+
+    <!-- Folder/file picker dialogs -->
+    <string name="folder_picker_title">Select Folder</string>
+    <string name="select_storage_location">Select a storage location</string>
+    <string name="folder_picker_same_folder">Cannot select the same folder</string>
+    <string name="folder_picker_internal_storage">Go to internal storage</string>
+    <string name="folder_picker_create_folder">Create folder</string>
+    <string name="folder_picker_no_subfolders">No subfolders</string>
+    <string name="folder_picker_create_new_folder">Create New Folder</string>
+    <string name="folder_picker_error_empty">Folder name cannot be empty</string>
+    <string name="folder_picker_error_exists">Folder already exists</string>
+    <string name="folder_picker_error_create_failed">Failed to create folder</string>
+    <string name="file_picker_select_subtitle">Select Subtitle</string>
+
+    <!-- Community dialog -->
+    <string name="community_hub">Community Hub</string>
+    <string name="community_connect_summary">Connect with us on social media</string>
+
+    <!-- Advanced preferences screen -->
+    <string name="settings_export_failed">Export failed: %1$s</string>
+    <string name="settings_import_failed">Import failed: %1$s</string>
+    <string name="settings_export_success">Successfully exported %1$d items!</string>
+    <string name="settings_import_results">Successfully imported: %1$d\nFailed: %2$d\nVersion: %3$s\n\nPlease restart the app for all changes to take effect.</string>
+    <string name="pref_advanced_mpv_directory_ready">MPV directory ready ✓</string>
+    <string name="pref_advanced_section_backup">Backup &amp; Restore</string>
+    <string name="pref_advanced_section_mpv_config">MPV Configuration</string>
+    <string name="pref_advanced_section_scripts">Scripts</string>
+    <string name="pref_advanced_section_history">History</string>
+    <string name="pref_advanced_section_cache">Cache</string>
+    <string name="pref_advanced_section_system">System Integration</string>
+    <string name="pref_advanced_section_logging">Logging</string>
+    <string name="pref_advanced_tap_to_edit">Tap to edit configuration</string>
+    <string name="pref_advanced_lua_need_setup">Set storage location and enable Lua scripts first</string>
+    <string name="pref_advanced_lua_none_enabled">No scripts enabled</string>
+    <plurals name="pref_advanced_lua_scripts_enabled">
+        <item quantity="one">%1$d script enabled</item>
+        <item quantity="other">%1$d scripts enabled</item>
+    </plurals>
+    <string name="pref_advanced_clear_failed">Failed to clear: %1$s</string>
+    <string name="pref_advanced_config_cache_cleared">Config cache cleared</string>
+    <string name="pref_advanced_clear_thumbnails_confirm_title">Clear thumbnail cache?</string>
+    <string name="pref_advanced_clear_thumbnails_confirm_subtitle">This will delete all cached thumbnails (local and network) from storage and memory.</string>
+    <string name="pref_advanced_thumbnail_cache_cleared">Thumbnail cache cleared</string>
+    <string name="pref_advanced_clear_fonts_cache_summary">Remove all cached subtitle fonts</string>
+    <string name="pref_advanced_media_info_title">Enable Media Info Activity</string>
+    <string name="pref_advanced_media_info_summary">Show \'Media Info\' as an option in system-wide \'Open with\' menus</string>
+
+    <!-- More generic additions -->
+    <string name="generic_clear">Clear</string>
+    <string name="generic_import">Import</string>
+    <string name="generic_export">Export</string>
+    <string name="generic_all">All</string>
+    <string name="generic_edit">Edit</string>
+    <string name="generic_error_fmt">Error: %1$s</string>
+
+    <!-- Preference section headers -->
+    <string name="pref_section_general">General</string>
+    <string name="pref_section_ui_appearance">UI &amp; Appearance</string>
+    <string name="pref_section_playback_controls">Playback &amp; Controls</string>
+    <string name="pref_section_file_management">File Management</string>
+    <string name="pref_section_media">Media Settings</string>
+    <string name="pref_section_advanced_about">Advanced &amp; About</string>
+
+    <!-- RexShorts preferences -->
+    <string name="pref_shorts_title">RexShorts Settings</string>
+    <string name="pref_shorts_enable_title">Enable RexShorts</string>
+    <string name="pref_shorts_enable_summary">Show the Shorts tab in the bottom navigation bar</string>
+    <string name="pref_shorts_auto_swipe_title">Auto Swipe to Next Short</string>
+    <string name="pref_shorts_auto_swipe_summary">Automatically swipe to the next short when current one ends</string>
+    <string name="pref_shorts_section_discovery">Discovery</string>
+    <string name="pref_shorts_include_horizontal_title">Include Short Normal Videos</string>
+    <string name="pref_shorts_include_horizontal_summary">Show horizontal videos in the feed if they are short</string>
+    <string name="pref_shorts_max_horizontal_title">Max Horizontal Duration</string>
+    <string name="pref_shorts_section_content">Content Management</string>
+    <string name="pref_shorts_blocked_title">Blocked Videos</string>
+    <string name="pref_shorts_blocked_summary">View and manage blocked shorts</string>
+    <string name="pref_shorts_manage_summary">Manage enable/disable, shuffle, and blocked content</string>
+    <string name="shorts_blocked_label">Blocked</string>
+
+    <!-- Player controls preferences -->
+    <string name="pref_controls_section_landscape">Landscape Controls</string>
+    <string name="pref_controls_section_portrait">Portrait Controls</string>
+    <string name="pref_controls_section_more_sheet">More Sheet Controls</string>
+    <string name="pref_controls_buttons_in_controls_tab">Buttons in Controls Tab</string>
+    <string name="pref_controls_section_seekbar_style">Seekbar Style</string>
+    <string name="pref_controls_section_layout">Controls Layout</string>
+    <string name="pref_controls_gradient_opacity_title">Player gradient opacity</string>
+    <string name="pref_controls_current_value">Current: %1$d%%</string>
+    <string name="pref_controls_custom_hide_time">Enter custom hide time in milliseconds</string>
+    <string name="pref_controls_edit_fmt">Edit %1$s</string>
+    <string name="layout_editor_reset_title">Reset Layout</string>
+    <string name="layout_editor_reset_subtitle">Are you sure you want to reset this region to defaults?</string>
+
+    <!-- Lua scripts / config editor -->
+    <string name="lua_enter_file_name">Please enter a file name</string>
+    <string name="lua_no_storage_location">No storage location set</string>
+    <string name="lua_create_file_failed">Failed to create file</string>
+    <string name="lua_open_stream_failed">Failed to open output stream</string>
+    <string name="lua_save_failed">Failed to save: %1$s</string>
+    <string name="lua_save_before_share">Save the script first before sharing</string>
+    <string name="lua_delete_script_title">Delete Script?</string>
+    <string name="lua_delete_script_subtitle">Are you sure you want to delete \"%1$s\"? This action cannot be undone.</string>
+    <string name="lua_script_not_found">Script file not found</string>
+    <string name="lua_share_error">Error sharing script: %1$s</string>
+    <string name="lua_create_new_script">Create new script</string>
+
+    <!-- Custom buttons screen -->
+    <string name="custom_button_export_success">Buttons exported successfully</string>
+    <string name="custom_button_read_failed">Failed to read file: %1$s</string>
+    <string name="custom_button_screen_title">Custom Buttons</string>
+    <string name="custom_button_screen_subtitle">Drag to reorder • Tap any slot to expand &amp; edit</string>
+    <string name="custom_button_drag_to_reorder">Drag to reorder</string>
+    <string name="custom_button_import_export">Import / Export</string>
+    <string name="custom_button_import_export_summary">Backup or share all your custom buttons with their Lua code as an XML file</string>
+    <plurals name="custom_button_imported">
+        <item quantity="one">Imported %1$d button</item>
+        <item quantity="other">Imported %1$d buttons</item>
+    </plurals>
+    <string name="custom_button_drag_disabled">Drag disabled</string>
+    <string name="custom_button_title_label">Button title *</string>
+    <string name="custom_button_tap_action">Tap action *</string>
+    <string name="custom_button_long_press_action">Long press action</string>
+    <string name="custom_button_on_startup">On startup</string>
+    <string name="custom_button_enabled">Button enabled</string>
+    <string name="custom_button_enabled_summary">Button is active in the player</string>
+    <string name="custom_button_disabled_summary">Button is saved but hidden</string>
+    <string name="custom_button_tap_to_write_lua">Tap to write Lua code…</string>
+    <string name="custom_button_select_import">Select Buttons to Import</string>
+    <string name="custom_button_select_import_summary">Choose which buttons to import</string>
+    <string name="custom_button_overwrite_warning">Will overwrite existing button</string>
+
+    <!-- Appearance thumbnail dialogs -->
+    <string name="pref_appearance_thumb_cache_cleared">Local thumbnail cache cleared</string>
+    <string name="pref_appearance_thumb_cache_clear_failed">Failed to clear cache</string>
+    <string name="pref_appearance_network_thumbs_confirm_title">Enable Network Thumbnails?</string>
+    <string name="pref_appearance_network_thumbs_confirm_text">Generating thumbnails for network streams (M3U/HTTP) may significantly increase background data usage and loading times. Proceed?</string>
+    <string name="pref_appearance_thumb_strategy_confirm_title">Change Thumbnail Strategy?</string>
+    <string name="pref_appearance_thumb_clear_cache_notice">Changing this will clear your currently saved thumbnail cache. New thumbnails will be generated automatically as you browse.</string>
+    <string name="pref_appearance_thumb_position_confirm_title">Update Thumbnail Position?</string>
+    <string name="pref_appearance_thumb_position_confirm_value">Reset thumbnail at %1$d%% of the video duration.</string>
+
+    <!-- Subtitles preferences additions -->
+    <string name="pref_subtitles_sources">Subtitle Sources</string>
+    <string name="pref_subtitles_advanced_filters">Advanced Search Filters</string>
+    <string name="pref_subtitles_hi_friendly_title">Hearing-impaired friendly</string>
+    <string name="pref_subtitles_hi_friendly_summary">Only show subtitles optimized for hearing impaired</string>
+    <string name="pref_subtitles_preferred_formats">Preferred Formats</string>
+    <string name="pref_subtitles_preferred_encodings">Preferred Encodings</string>
+    <string name="pref_subtitles_provided_by">Subtitle Search provided by</string>
+
+    <!-- About screen -->
+    <string name="about_up_to_date">You are up to date!</string>
+    <string name="about_update_check_failed">Failed to check for updates</string>
+    <string name="about_device_info">Device Info</string>
+    <string name="about_section_updates">Updates</string>
+    <string name="about_auto_update_title">Auto Check for Updates</string>
+    <string name="about_auto_update_summary">Check for new versions on startup</string>
+    <string name="about_checking">Checking…</string>
+    <string name="about_manual_check_summary">Manually check for new versions on GitHub</string>
+
+    <!-- Generic additions (browser batch) -->
+    <string name="generic_search">Search</string>
+    <string name="generic_play">Play</string>
+    <string name="generic_paste">Paste</string>
+    <string name="generic_or">OR</string>
+    <string name="generic_move">Move</string>
+    <string name="generic_more">More</string>
+    <string name="generic_folder">Folder</string>
+    <string name="generic_folders">Folders</string>
+    <string name="generic_videos">Videos</string>
+    <string name="generic_selected">Selected</string>
+    <string name="more_options">More options</string>
+    <string name="blacklist">Blacklist</string>
+    <string name="rename_failed">Rename failed</string>
+    <string name="share_failed">Failed to share: %1$s</string>
+    <string name="path_fmt">Path: %1$s</string>
+    <string name="total_length">Total length</string>
+    <string name="selection_info">Selection Info</string>
+    <string name="search_try_different">Try a different search term</string>
+    <string name="no_videos_found">No videos found</string>
+    <string name="search_all_videos">Search all videos…</string>
+    <string name="section_folders_count">Folders (%1$d)</string>
+    <string name="section_media_count">Media (%1$d)</string>
+    <string name="community_links">Community Links</string>
+
+    <!-- Playlists (browser batch) -->
+    <string name="playlist_none_found">No playlists found</string>
+    <string name="playlist_empty_message">Create a playlist or add one from an m3u URL</string>
+    <string name="playlist_done_reordering">Done reordering</string>
+    <string name="playlist_reorder">Reorder playlist</string>
+    <string name="playlist_options">Playlist Options</string>
+    <string name="playlist_create_empty_desc">Create a new blank playlist</string>
+    <string name="playlist_add_from_url_desc">Import a playlist from a web URL</string>
+    <string name="remove_from_playlist_action">Remove from Playlist</string>
+    <plurals name="remove_from_playlist_title">
+        <item quantity="one">Remove %1$d video from playlist?</item>
+        <item quantity="other">Remove %1$d videos from playlist?</item>
+    </plurals>
+    <plurals name="remove_from_playlist_message">
+        <item quantity="one">The selected video will be removed from this playlist. The original file will not be deleted.</item>
+        <item quantity="other">The selected videos will be removed from this playlist. The original files will not be deleted.</item>
+    </plurals>
+
+    <!-- Mark as sheet -->
+    <string name="mark_as">Mark as</string>
+    <string name="mark_as_last_played">Last Played</string>
+    <string name="mark_as_last_played_desc">Move to top of Recently Played</string>
+    <string name="mark_as_finished">Finished</string>
+    <string name="mark_as_finished_desc">Mark as fully watched</string>
+    <string name="mark_as_none">None</string>
+    <string name="mark_as_none_desc">Remove all marks and watch history</string>
+
+    <!-- Play link sheet -->
+    <string name="play_link">Play Link</string>
+    <string name="invalid_url_protocol">Invalid URL protocol</string>
+    <string name="url_valid">Valid URL</string>
+    <string name="url_invalid">Invalid URL</string>
+
+    <!-- Media info sheet -->
+    <string name="media_info">Media Info</string>
+    <string name="media_info_analyzing">Analyzing media file…</string>
+
+    <!-- Network streaming -->
+    <string name="network_user_fmt">User: %1$s</string>
+    <string name="network_auto_connect">Connect automatically on app launch</string>
+    <string name="network_local">Local Network</string>
+    <string name="network_none_title">No network connections</string>
+    <string name="network_none_message">Add SMB, FTP, or WebDAV connections to browse network files</string>
+    <string name="network_stream_link">Stream Link</string>
+    <string name="network_error_loading">Error loading files</string>
+    <string name="network_empty_folder">Empty folder</string>
+    <string name="network_empty_folder_message">This folder contains no files or directories</string>
+
+    <!-- Recently played -->
+    <string name="recents_disabled_title">Recently Played is disabled</string>
+    <string name="recents_disabled_message">Enable it in Advanced Settings to track your playback history</string>
+    <string name="recents_empty_title">No recently played videos</string>
+    <string name="recents_empty_message">Videos you play will appear here</string>
+    <string name="recents_delete_original">Also delete original file(s)</string>
+
+    <!-- Private space -->
+    <string name="private_space_moving">Moving to private space…</string>
+    <string name="private_space_moved">Moved to Private Space</string>
+
+    <!-- Shorts screen -->
+    <string name="shorts_all_finished_title">All videos finished</string>
+    <string name="shorts_all_finished_message">You\'ve seen all vertical videos for now.</string>
+    <string name="shorts_video_info">Video Info</string>
+    <string name="shorts_info_name">Name: %1$s</string>
+    <string name="shorts_info_resolution">Resolution: %1$dx%2$d</string>
+    <string name="shorts_auto_swipe_short_desc">Swipe automatically when video ends</string>
+    <string name="shorts_blocked_manager">Blocked Videos Manager</string>
+    <string name="shorts_loved">Loved</string>
+    <string name="shorts_love">Love</string>
+    <string name="shorts_block">Block</string>
+
+    <!-- Selection manager toasts -->
+    <string name="delete_success">Deleted successfully</string>
+    <string name="delete_failed">Failed to delete</string>
+    <string name="delete_failed_fmt">Failed to delete: %1$s</string>
+    <string name="rename_success">Renamed successfully</string>
+    <string name="rename_failed_fmt">Failed to rename: %1$s</string>
+
+    <!-- Storage permission screen -->
+    <string name="permission_storage_title">Storage Access Required</string>
+    <string name="permission_request_photos_videos">mpvEx requires \"Photos and videos\" permission to access and play your video files stored on your device.</string>
+    <string name="permission_request_storage">mpvEx requires \"Storage\" permission to access and play your media files stored on your device.</string>
+    <string name="permission_request_all_files">mpvEx requires \"All file access\" permission to discover media and subtitles on your device due to a change in security policy in Android 11 and later versions.</string>
+    <string name="permission_allow_access">ALLOW ACCESS</string>
+    <string name="permission_why_title">Why do I see this?</string>
+    <string name="permission_why_header">Why this permission is needed</string>
+    <string name="permission_why_core">mpvEx needs access to your video files to provide its core functionality as a media player.</string>
+    <string name="permission_why_android13">On Android 13 and above, this permission allows the app to read video files from your device\'s storage, including Downloads, Movies, and DCIM folders.</string>
+    <string name="permission_why_legacy">This permission allows the app to read media files from your device\'s storage to play videos and audio.</string>
+    <string name="permission_why_used_for">The permission is used exclusively for:</string>
+    <string name="permission_why_used_for_items">• Discovering and displaying your video files\n• Playing media content\n• Loading subtitle files</string>
+    <string name="permission_why_history">mpvEx has always required storage access permission as it\'s essential for the app to find all media and subtitle files on your device, including the ones that are not supported by the system.</string>
+    <string name="permission_why_policy">However, due to a change in security policy, apps built for Android 11 and above now require additional permission to continue accessing the same.</string>
+    <string name="permission_why_scope">Please know that this permission is only used for the auto-discovery of media/subtitle files on your device and will not allow us to access the private data files stored by other apps in any way.</string>
+    <string name="permission_why_open_source">mpvEx is an open source project. You can review the source code and verify how permissions are used by visiting our GitHub repository at:</string>
+    <string name="permission_why_privacy">Be rest assured, your privacy is our utmost priority, and we neither access your files for other purposes nor transfer or store them to our servers. They remain safe on your device.</string>
+
+    <!-- Player controls -->
+    <string name="playback_speed">Playback Speed</string>
+    <string name="speed_reset">Reset Speed</string>
+    <string name="control_rotation">Rotation</string>
+    <string name="control_frame_nav">Frame Nav</string>
+    <string name="frame_previous">Previous Frame</string>
+    <string name="frame_next">Next Frame</string>
+    <string name="take_screenshot">Take Screenshot</string>
+    <string name="video_zoom">Video Zoom</string>
+    <string name="control_pip">PiP</string>
+    <string name="control_lock">Lock</string>
+    <string name="control_skip_fmt">Skip %1$ds</string>
+    <string name="control_vertical_flip">Vertical Flip</string>
+    <string name="control_loop">Loop</string>
+    <string name="control_background">Background</string>
+    <string name="control_ambient">Ambient</string>
+    <string name="control_ambience_mode">Ambience Mode</string>
+    <string name="control_previous">Previous</string>
+    <string name="control_next">Next</string>
+    <string name="control_clear_loop">Clear Loop</string>
+    <string name="slide_to_unlock">Slide to Unlock</string>
+    <string name="ambient_mode_on">Ambience Mode: ON</string>
+    <string name="ambient_mode_off">Ambience Mode: OFF</string>
+    <string name="sub_position_fmt">Sub position: %d</string>
+    <string name="screenshot_failed">Failed to create screenshot</string>
+    <string name="snapshot_save_failed">Failed to save snapshot: %1$s</string>
+    <string name="lua_script_loaded">Loaded script: %1$s</string>
+    <string name="frame_label">"Frame: "</string>
+    <string name="timestamp_label">"Timestamp: "</string>
+    <string name="not_available_4k8k">Not available for 4K/8K video</string>
+    <string name="extended_controls">Extended Controls</string>
+    <string name="zoom_decrease">Decrease zoom</string>
+    <string name="zoom_increase">Increase zoom</string>
+    <string name="pan_and_zoom">Pan &amp; Zoom</string>
+    <string name="search_reset">Reset Search</string>
+    <string name="season_fmt">Season %1$d</string>
+    <string name="episode_fmt">Ep %1$d</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="playing_label">Playing</string>
+    <string name="aspect_ratio_title">Aspect Ratio</string>
+    <string name="aspect_presets">Presets</string>
+    <string name="generic_custom">Custom</string>
+    <string name="aspect_add_custom">Add Custom Ratio (e.g. 16:9)</string>
+
+    <!-- Update dialog -->
+    <string name="update_ready_to_install">Ready to Install</string>
+    <string name="update_available">Update Available</string>
+    <string name="update_current_version">Current Version</string>
+    <string name="update_latest_version">Latest Version</string>
+    <string name="update_release_date">Release Date</string>
+    <string name="update_size">Size</string>
+    <string name="update_release_notes">Release Notes</string>
+    <string name="update_downloading">Downloading…</string>
+
+    <!-- Second-wave: preferences -->
+    <string name="pref_player_keep_screen_on_paused_on">Screen stays awake while video is paused</string>
+    <string name="pref_player_keep_screen_on_paused_off">Screen can turn off while video is paused</string>
+    <string name="pref_controls_bottom_below_seekbar">Bottom controls below seekbar</string>
+    <string name="pref_controls_bottom_below_summary">Control buttons appear below the seekbar</string>
+    <string name="pref_controls_bottom_above_summary">Control buttons appear above the seekbar</string>
+    <string name="pref_controls_custom_ms">Custom (%1$d ms)</string>
+    <string name="layout_editor_region_top_right">Edit Top Right</string>
+    <string name="layout_editor_region_bottom_right">Edit Bottom Right</string>
+    <string name="layout_editor_region_bottom_left">Edit Bottom Left</string>
+    <string name="layout_editor_region_portrait_bottom">Edit Portrait Bottom</string>
+    <string name="layout_editor_region_more_sheet">Edit More Sheet Buttons</string>
+    <string name="layout_editor_hint">Long press to reorder items. Tap the \'-\' icon to remove them.</string>
+    <string name="layout_editor_drop_zone_empty">Drop zone is empty</string>
+    <string name="layout_editor_tap_palette">Tap buttons from the \'Available Palette\' below</string>
+    <string name="layout_editor_all_in_use">All available buttons are in use.</string>
+    <string name="layout_editor_icons_legend">Icons Legend</string>
+    <string name="pref_gesture_custom_seconds">Custom (%1$ds)</string>
+    <string name="pref_gesture_custom_seek_hint">Enter custom seek duration in seconds (1-120)</string>
+    <string name="editor_unsaved_changes">Unsaved changes</string>
+    <string name="lua_create_script_title">Create Lua Script</string>
+    <string name="lua_edit_script_title">Edit Lua Script</string>
+    <string name="lua_script_name">Script name</string>
+    <string name="shorts_no_blocked">No blocked videos</string>
+    <string name="custom_button_field_tap">Tap action  ·  %1$s</string>
+    <string name="custom_button_field_longpress">Long press  ·  %1$s</string>
+    <string name="custom_button_field_startup">On startup  ·  %1$s</string>
+
+    <!-- Second-wave: player controls -->
+    <string name="control_repeat_off">Repeat Off</string>
+    <string name="control_repeat_one">Repeat One</string>
+    <string name="control_repeat_all">Repeat All</string>
+    <string name="control_shuffle_on">Shuffle On</string>
+    <string name="control_shuffle_off">Shuffle Off</string>
+    <string name="control_mirrored">Mirrored</string>
+    <string name="control_mirror">Mirror</string>
+    <string name="control_flipped">Flipped</string>
+    <string name="control_flip_vert">Flip Vert</string>
+    <string name="control_ab">AB</string>
+    <string name="osd_repeat_off">Repeat: Off</string>
+    <string name="osd_repeat_current">Repeat: Current file</string>
+    <string name="osd_repeat_all">Repeat: All playlist</string>
+    <string name="osd_shuffle_on">Shuffle: On</string>
+    <string name="osd_shuffle_unavailable">Shuffle: Not available</string>
+    <string name="osd_shuffle_off">Shuffle: Off</string>
+    <string name="osd_frame_fmt2">Frame: %1$d/%2$d</string>
+    <string name="osd_frame_fmt1">Frame: %1$d</string>
+    <string name="osd_speed_locked">Speed Locked</string>
+    <string name="osd_swipe_to_lock">Swipe up to lock</string>
+    <string name="aspect_invalid">Invalid</string>
+    <string name="playlist_switch_grid">Switch to Grid View</string>
+    <string name="playlist_switch_list">Switch to List View</string>
+
+    <!-- Second-wave: misc UI -->
+    <plurals name="pref_shorts_max_horizontal_summary">
+        <item quantity="one">Limit horizontal videos to %1$d minute</item>
+        <item quantity="other">Limit horizontal videos to %1$d minutes</item>
+    </plurals>
+    <string name="lua_scripts_title">Lua Scripts</string>
+    <string name="custom_button_empty_slot">Empty slot</string>
+    <string name="custom_button_add">Add button</string>
+    <string name="player_button_video_title">Video Title</string>
+    <string name="searching">Searching…</string>
+    <string name="searching_all_volumes">Searching all storage volumes…</string>
+    <string name="shorts_no_blocked_found">No blocked videos found</string>
+    <string name="shorts_no_vertical">No vertical videos found</string>
+    <string name="subtitle_header_embedded">Embedded Subtitles</string>
+    <string name="subtitle_header_local">Local Subtitles</string>
+    <string name="subtitle_header_external">External Subtitles</string>
+
+    <!-- Third-wave: player button labels (layout editor / more sheet / accessibility) -->
+    <string name="btn_label_back">Back Arrow</string>
+    <string name="btn_label_title">Video Title</string>
+    <string name="btn_label_bookmarks">Chapters / Bookmarks</string>
+    <string name="btn_label_speed">Playback Speed</string>
+    <string name="btn_label_decoder">Decoder</string>
+    <string name="btn_label_rotation">Screen Rotation</string>
+    <string name="btn_label_frame_nav">Frame Navigation</string>
+    <string name="btn_label_zoom">Video Zoom</string>
+    <string name="btn_label_pip">Picture-in-Picture</string>
+    <string name="btn_label_aspect">Aspect Ratio</string>
+    <string name="btn_label_lock">Lock Controls</string>
+    <string name="btn_label_audio">Audio Track</string>
+    <string name="btn_label_subtitles">Subtitles</string>
+    <string name="btn_label_more">More Options</string>
+    <string name="btn_label_chapter">Current Chapter</string>
+    <string name="btn_label_repeat_mode">Repeat Mode</string>
+    <string name="btn_label_shuffle">Shuffle</string>
+    <string name="btn_label_mirror">Horizontal Flip</string>
+    <string name="btn_label_vertical_flip">Vertical Flip</string>
+    <string name="btn_label_ab_loop">A-B Loop</string>
+    <string name="btn_label_custom_skip">Custom Skip</string>
+    <string name="btn_label_background">Background Playback</string>
+    <string name="btn_label_ambient">Ambience Mode</string>
+    <string name="btn_label_none">None</string>
+
+    <!-- Third-wave: video filter presets -->
+    <string name="filter_preset_none">None</string>
+    <string name="filter_preset_none_desc">Default settings with no adjustments</string>
+    <string name="filter_preset_vivid">Vivid</string>
+    <string name="filter_preset_vivid_desc">Enhanced colors with crisp details</string>
+    <string name="filter_preset_warm_tone">Warm Tone</string>
+    <string name="filter_preset_warm_tone_desc">Warmer colors with golden tint</string>
+    <string name="filter_preset_cool_tone">Cool Tone</string>
+    <string name="filter_preset_cool_tone_desc">Cooler colors with blue tint</string>
+    <string name="filter_preset_soft_pastel">Soft Pastel</string>
+    <string name="filter_preset_soft_pastel_desc">Soft, muted colors with gentle look</string>
+    <string name="filter_preset_cinematic">Cinematic</string>
+    <string name="filter_preset_cinematic_desc">Film-like color grading with depth</string>
+    <string name="filter_preset_dramatic">Dramatic</string>
+    <string name="filter_preset_dramatic_desc">High contrast dramatic look</string>
+    <string name="filter_preset_night_mode">Night Mode</string>
+    <string name="filter_preset_night_mode_desc">Reduced brightness for dark environments</string>
+    <string name="filter_preset_nostalgic">Nostalgic</string>
+    <string name="filter_preset_nostalgic_desc">Vintage film look with soft focus</string>
+    <string name="filter_preset_ghibli_style">Ghibli Style</string>
+    <string name="filter_preset_ghibli_style_desc">Soft, dreamy anime colors</string>
+    <string name="filter_preset_neon_pop">Neon Pop</string>
+    <string name="filter_preset_neon_pop_desc">Vibrant neon-like colors with edge</string>
+    <string name="filter_preset_deep_black">Deep Black</string>
+    <string name="filter_preset_deep_black_desc">Enhanced blacks for OLED displays</string>
+
+    <!-- Third-wave: fallback labels -->
+    <string name="player_chapters_title">Chapters</string>
+    <string name="playlist_fallback_title">Playlist</string>
+    <string name="subtitle_season_placeholder">Season</string>
+    <string name="subtitle_ep_placeholder">Ep</string>
+
+    <!-- Fourth-wave: recently-played delete dialog + share titles -->
+    <plurals name="recents_delete_confirm_title">
+        <item quantity="one">Delete %1$d item?</item>
+        <item quantity="other">Delete %1$d items?</item>
+    </plurals>
+    <plurals name="recents_remove_confirm_title">
+        <item quantity="one">Remove %1$d item from history?</item>
+        <item quantity="other">Remove %1$d items from history?</item>
+    </plurals>
+    <string name="recents_delete_confirm_subtitle">This will permanently delete the original video file(s) from your device storage.\n\nThis action cannot be undone.</string>
+    <plurals name="recents_remove_confirm_subtitle">
+        <item quantity="one">This will remove the selected item from your recently played list. The original video file will not be deleted.</item>
+        <item quantity="other">This will remove the selected items from your recently played list. The original video files will not be deleted.</item>
+    </plurals>
+    <plurals name="share_videos_title">
+        <item quantity="one">Share video</item>
+        <item quantity="other">Share %1$d videos</item>
+    </plurals>
+    <string name="share_media_info">Share Media Info</string>
+    <string name="share_script">Share script</string>
+    <string name="share_script_named">Share %1$s</string>
+    <string name="pip_rewind">Rewind</string>
+    <string name="pip_pause">Pause</string>
+    <string name="pip_play">Play</string>
+    <string name="pip_forward">Forward</string>
+    <string name="media_info_load_failed">Failed to load media information</string>
+    <string name="tree_view_title">Tree View</string>
+
+    <!-- Sort order labels -->
+    <string name="sort_order_a_z">A-Z</string>
+    <string name="sort_order_z_a">Z-A</string>
+    <string name="sort_order_shortest">Shortest</string>
+    <string name="sort_order_longest">Longest</string>
+    <string name="sort_order_oldest">Oldest</string>
+    <string name="sort_order_newest">Newest</string>
+    <string name="sort_order_smallest">Smallest</string>
+    <string name="sort_order_largest">Largest</string>
+    <string name="sort_order_asc">Asc</string>
+    <string name="sort_order_desc">Desc</string>
 </resources>

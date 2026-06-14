@@ -21,8 +21,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import app.marlboroadvance.mpvex.R
 import app.marlboroadvance.mpvex.preferences.BrowserPreferences
 import app.marlboroadvance.mpvex.preferences.preference.collectAsState
 import app.marlboroadvance.mpvex.presentation.Screen
@@ -52,7 +55,7 @@ object ShortsPreferencesScreen : Screen {
                 TopAppBar(
                     title = {
                         Text(
-                            text = "RexShorts Settings",
+                            text = stringResource(R.string.pref_shorts_title),
                             style = MaterialTheme.typography.headlineSmall,
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colorScheme.primary,
@@ -77,7 +80,7 @@ object ShortsPreferencesScreen : Screen {
                         .padding(padding),
                 ) {
                     item {
-                        PreferenceSectionHeader(title = "General")
+                        PreferenceSectionHeader(title = stringResource(R.string.pref_section_general))
                     }
 
                     item {
@@ -85,8 +88,8 @@ object ShortsPreferencesScreen : Screen {
                             SwitchPreference(
                                 value = enableShorts,
                                 onValueChange = { browserPreferences.enableShorts.set(it) },
-                                title = { Text("Enable RexShorts") },
-                                summary = { Text("Show the Shorts tab in the bottom navigation bar") },
+                                title = { Text(stringResource(R.string.pref_shorts_enable_title)) },
+                                summary = { Text(stringResource(R.string.pref_shorts_enable_summary)) },
                                 icon = {
                                     Icon(
                                         Icons.Outlined.VideoLibrary,
@@ -101,8 +104,8 @@ object ShortsPreferencesScreen : Screen {
                             SwitchPreference(
                                 value = autoSwipeShorts,
                                 onValueChange = { browserPreferences.autoSwipeShorts.set(it) },
-                                title = { Text("Auto Swipe to Next Short") },
-                                summary = { Text("Automatically swipe to the next short when current one ends") },
+                                title = { Text(stringResource(R.string.pref_shorts_auto_swipe_title)) },
+                                summary = { Text(stringResource(R.string.pref_shorts_auto_swipe_summary)) },
                                 icon = {
                                     Icon(
                                         Icons.Outlined.Repeat,
@@ -115,7 +118,7 @@ object ShortsPreferencesScreen : Screen {
                     }
 
                     item {
-                        PreferenceSectionHeader(title = "Discovery")
+                        PreferenceSectionHeader(title = stringResource(R.string.pref_shorts_section_discovery))
                     }
 
                     item {
@@ -123,8 +126,8 @@ object ShortsPreferencesScreen : Screen {
                             SwitchPreference(
                                 value = includeHorizontal,
                                 onValueChange = { browserPreferences.includeShortHorizontalVideos.set(it) },
-                                title = { Text("Include Short Normal Videos") },
-                                summary = { Text("Show horizontal videos in the feed if they are short") },
+                                title = { Text(stringResource(R.string.pref_shorts_include_horizontal_title)) },
+                                summary = { Text(stringResource(R.string.pref_shorts_include_horizontal_summary)) },
                                 icon = {
                                     Icon(
                                         Icons.Outlined.HorizontalRule,
@@ -141,10 +144,10 @@ object ShortsPreferencesScreen : Screen {
                                 onValueChange = { browserPreferences.maxHorizontalVideoDurationMinutes.set(it.roundToInt()) },
                                 sliderValue = maxDuration.toFloat(),
                                 onSliderValueChange = { browserPreferences.maxHorizontalVideoDurationMinutes.set(it.roundToInt()) },
-                                title = { Text("Max Horizontal Duration") },
+                                title = { Text(stringResource(R.string.pref_shorts_max_horizontal_title)) },
                                 summary = { 
                                     Text(
-                                        text = "Limit horizontal videos to $maxDuration minute${if (maxDuration > 1) "s" else ""}",
+                                        text = pluralStringResource(R.plurals.pref_shorts_max_horizontal_summary, maxDuration, maxDuration),
                                         color = MaterialTheme.colorScheme.outline
                                     ) 
                                 },
@@ -159,16 +162,16 @@ object ShortsPreferencesScreen : Screen {
                     }
 
                     item {
-                        PreferenceSectionHeader(title = "Content Management")
+                        PreferenceSectionHeader(title = stringResource(R.string.pref_shorts_section_content))
                     }
 
                     item {
                         PreferenceCard {
                             Preference(
-                                title = { Text("Blocked Videos") },
+                                title = { Text(stringResource(R.string.pref_shorts_blocked_title)) },
                                 summary = { 
                                     Text(
-                                        text = "View and manage blocked shorts",
+                                        text = stringResource(R.string.pref_shorts_blocked_summary),
                                         color = MaterialTheme.colorScheme.outline
                                     ) 
                                 },

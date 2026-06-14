@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -59,7 +60,7 @@ val LocalUpdateViewModel = staticCompositionLocalOf<UpdateViewModel?> { null }
 /**
  * Main entry point for the application
  */
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
   private val appearancePreferences by inject<AppearancePreferences>()
   private val networkRepository by inject<NetworkRepository>()
   
@@ -228,7 +229,7 @@ class MainActivity : ComponentActivity() {
               release = release,
               isDownloading = isDownloading,
               progress = downloadProgress,
-              actionLabel = if (isDownloading) "Downloading..." else "Download",
+              isInstall = false,
               currentVersion = currentVersion,
               onDismiss = { updateViewModel.dismiss() },
               onAction = { 
@@ -250,7 +251,7 @@ class MainActivity : ComponentActivity() {
               release = release,
               isDownloading = isDownloading,
               progress = downloadProgress,
-              actionLabel = "Install",
+              isInstall = true,
               currentVersion = currentVersion,
               onDismiss = { updateViewModel.dismiss() },
               onAction = { 
